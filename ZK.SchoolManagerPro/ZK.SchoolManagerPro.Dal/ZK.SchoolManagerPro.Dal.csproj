@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="UserDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary1\ZK.SchoolManagerPro.Common.csproj">
+      <Project>{06210430-a0ac-4c55-8ea4-58e79af40f28}</Project>
+      <Name>ZK.SchoolManagerPro.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZK.SchoolManagerPro.Model\ZK.SchoolManagerPro.Model.csproj">
+      <Project>{dcbd3c5e-ee72-48e4-9503-a38d8a140d09}</Project>
+      <Name>ZK.SchoolManagerPro.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

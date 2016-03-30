@@ -1,0 +1,10 @@
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Dal.dll
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Dal.pdb
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\obj\Debug\ZK.SchoolManagerPro.Dal.csprojResolveAssemblyReference.cache
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\obj\Debug\ZK.SchoolManagerPro.Dal.dll
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\obj\Debug\ZK.SchoolManagerPro.Dal.pdb
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ClassLibrary1.dll
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\MySql.Data.dll
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Model.dll
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ClassLibrary1.pdb
+E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Model.pdb

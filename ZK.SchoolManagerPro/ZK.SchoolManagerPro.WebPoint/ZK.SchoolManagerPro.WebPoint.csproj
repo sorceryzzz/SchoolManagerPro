@@ -279,6 +279,16 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZK.SchoolManagerPro.Bll\ZK.SchoolManagerPro.Bll.csproj">
+      <Project>{6a06ec02-99de-4596-87c2-466d107926d1}</Project>
+      <Name>ZK.SchoolManagerPro.Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZK.SchoolManagerPro.Model\ZK.SchoolManagerPro.Model.csproj">
+      <Project>{dcbd3c5e-ee72-48e4-9503-a38d8a140d09}</Project>
+      <Name>ZK.SchoolManagerPro.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

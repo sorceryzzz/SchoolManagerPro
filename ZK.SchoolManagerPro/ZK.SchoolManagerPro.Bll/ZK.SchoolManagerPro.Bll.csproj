@@ -41,8 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="UserBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZK.SchoolManagerPro.Dal\ZK.SchoolManagerPro.Dal.csproj">
+      <Project>{33f7ad54-7eca-42de-b18c-dec1bbcf2f68}</Project>
+      <Name>ZK.SchoolManagerPro.Dal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZK.SchoolManagerPro.Model\ZK.SchoolManagerPro.Model.csproj">
+      <Project>{dcbd3c5e-ee72-48e4-9503-a38d8a140d09}</Project>
+      <Name>ZK.SchoolManagerPro.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
