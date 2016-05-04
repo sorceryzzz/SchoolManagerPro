@@ -154,76 +154,76 @@ namespace ZK.SchoolManagerPro.DAL
             return rltBool ? 1 : -1;
         }
 
-        /// <summary>
-        /// 得到一个对象实体
-        /// </summary>
-        public ZK.SchoolManagerPro.Model.t_user_role GetModel(int? t_urid)
-        {
-            IDbDataParameter[] parms4t_user_role = PrepareGetModelParameters(t_urid);
-            using (IDataReader dr = dbHelper.ExecuteReader(CommandType.StoredProcedure, COMMAND_GETMODEL, parms4t_user_role))
-            {
-                if (dr.Read()) return GetModel(dr);
-                return null;
-            }
-        }
+        ///// <summary>
+        ///// 得到一个对象实体
+        ///// </summary>
+        //public ZK.SchoolManagerPro.Model.t_user_role GetModel(int? t_urid)
+        //{
+        //    IDbDataParameter[] parms4t_user_role = PrepareGetModelParameters(t_urid);
+        //    using (IDataReader dr = dbHelper.ExecuteReader(CommandType.StoredProcedure, COMMAND_GETMODEL, parms4t_user_role))
+        //    {
+        //        if (dr.Read()) return GetModel(dr);
+        //        return null;
+        //    }
+        //}
 
-        /// <summary>
-        /// 是否存在该记录
-        /// </summary>
-        public bool Exists(int? t_urid)
-        {
-            IDbDataParameter[] parms4t_user_role = PrepareExistParameters(t_urid);
-            object obj = dbHelper.ExecuteScalar(CommandType.StoredProcedure, COMMAND_EXISTS, parms4t_user_role);
-            return int.Parse(obj.ToString()) > 0;
-        }
+        ///// <summary>
+        ///// 是否存在该记录
+        ///// </summary>
+        //public bool Exists(int? t_urid)
+        //{
+        //    IDbDataParameter[] parms4t_user_role = PrepareExistParameters(t_urid);
+        //    object obj = dbHelper.ExecuteScalar(CommandType.StoredProcedure, COMMAND_EXISTS, parms4t_user_role);
+        //    return int.Parse(obj.ToString()) > 0;
+        //}
 
-        /// <summary>
-        /// 获取数量
-        /// </summary>
-        public int GetCount()
-        {
-            object obj = dbHelper.ExecuteScalar(CommandType.StoredProcedure, COMMAND_GETCOUNT, null);
-            return int.Parse(obj.ToString());
-        }
+        ///// <summary>
+        ///// 获取数量
+        ///// </summary>
+        //public int GetCount()
+        //{
+        //    object obj = dbHelper.ExecuteScalar(CommandType.StoredProcedure, COMMAND_GETCOUNT, null);
+        //    return int.Parse(obj.ToString());
+        //}
 
-        /// <summary>
-        /// 获取泛型数据列表
-        /// </summary>
-        public List<ZK.SchoolManagerPro.Model.t_user_role> GetList()
-        {
-            using (IDataReader dr = dbHelper.ExecuteReader(CommandType.StoredProcedure, COMMAND_GETLIST, null))
-            {
-                List<ZK.SchoolManagerPro.Model.t_user_role> lst = new List<ZK.SchoolManagerPro.Model.t_user_role>();
-                ExecuteReaderAction(dr, r => lst.Add(GetModel(r)));
-                return lst;
-            }
-        }
+        ///// <summary>
+        ///// 获取泛型数据列表
+        ///// </summary>
+        //public List<ZK.SchoolManagerPro.Model.t_user_role> GetList()
+        //{
+        //    using (IDataReader dr = dbHelper.ExecuteReader(CommandType.StoredProcedure, COMMAND_GETLIST, null))
+        //    {
+        //        List<ZK.SchoolManagerPro.Model.t_user_role> lst = new List<ZK.SchoolManagerPro.Model.t_user_role>();
+        //        ExecuteReaderAction(dr, r => lst.Add(GetModel(r)));
+        //        return lst;
+        //    }
+        //}
 
-        /// <summary>
-        /// 分页获取泛型数据列表
-        /// </summary>
-        public PageList<ZK.SchoolManagerPro.Model.t_user_role> GetPageList(PageInfo pi)
-        {
-            pi.RecordCount = GetCount();
-            pi.Compute();
+        ///// <summary>
+        ///// 分页获取泛型数据列表
+        ///// </summary>
+        //public PageList<ZK.SchoolManagerPro.Model.t_user_role> GetPageList(PageInfo pi)
+        //{
+        //    pi.RecordCount = GetCount();
+        //    pi.Compute();
 
-            PageList<ZK.SchoolManagerPro.Model.t_user_role> pl = new PageList<ZK.SchoolManagerPro.Model.t_user_role>(pi);
-            using (IDataReader dr = dbHelper.ExecuteReader(CommandType.Text, COMMAND_GETLIST, null))
-            {
-                pl.List = new List<ZK.SchoolManagerPro.Model.t_user_role>();
-                ExecuteReaderAction(dr, pi.FirstIndex, pi.PageSize, r => pl.List.Add(GetModel(r)));
-            }
-            return pl;
-        }
+        //    PageList<ZK.SchoolManagerPro.Model.t_user_role> pl = new PageList<ZK.SchoolManagerPro.Model.t_user_role>(pi);
+        //    using (IDataReader dr = dbHelper.ExecuteReader(CommandType.Text, COMMAND_GETLIST, null))
+        //    {
+        //        pl.List = new List<ZK.SchoolManagerPro.Model.t_user_role>();
+        //        ExecuteReaderAction(dr, pi.FirstIndex, pi.PageSize, r => pl.List.Add(GetModel(r)));
+        //    }
+        //    return pl;
+        //}
 
-        /// <summary>
-        /// 由一行数据得到一个实体
-        /// </summary>
-        private ZK.SchoolManagerPro.Model.t_user_role GetModel(IDataReader dr)
-        {
-            ZK.SchoolManagerPro.Model.t_user_role model = new ZK.SchoolManagerPro.Model.t_user_role();
-            PrepareModel(model, dr);
-            return model;
-        }
+        ///// <summary>
+        ///// 由一行数据得到一个实体
+        ///// </summary>
+        //private ZK.SchoolManagerPro.Model.t_user_role GetModel(IDataReader dr)
+        //{
+        //    ZK.SchoolManagerPro.Model.t_user_role model = new ZK.SchoolManagerPro.Model.t_user_role();
+        //    PrepareModel(model, dr);
+        //    return model;
+        //}
     }
 }
