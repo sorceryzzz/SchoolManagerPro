@@ -1,0 +1,84 @@
+@import url("comm.css");
+a:link {
+	color: #000;
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #000;
+}
+a:hover {
+	text-decoration: underline;
+	color: #000;
+}
+a:active {
+	text-decoration: none;
+	color: #000;
+}
+.bodybg {
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	z-index:1
+}
+.box {
+	background:#fff;
+	text-align:left;
+	height:170px;
+	border-radius: 5px;
+	vertical-align:top;
+}
+.boxtitle, .boxtitle div {
+	color:#c00e0e;
+	font-size:18px;
+	height:36px;
+	text-indent:48px;
+	font-weight:bold
+}
+.boxtitle {
+	margin:8px 20px 0 20px;
+}
+.time {
+	font-size:22px;
+	color:#FFF;
+	letter-spacing:5px;
+	font-family:微软雅黑;
+}
+.timebig {
+	font-size:36px;
+}
+.time a, .time a:link, .time a:visited, .time a:hover {
+	text-decoration:underline;
+	font-size:22px;
+	color:#FFF
+}
+.boxcontent {
+	margin:0 20px 8px 20px;
+	padding:5px
+}
+.more {
+	float:right
+}
+.wallpapers img {
+	width:30px;
+	cursor:pointer;
+	margin-bottom:10px;
+	border:#FFF 2px solid
+}
+td li {
+	background:url(../images/sj.jpg) no-repeat 0 7px;
+	text-indent:10px;
+}
+
+.menu_bottom {
+	background:#882121;
+	border-top:#660e00 1px solid;
+	height:64px;
+}
+.menu_bottom img {
+	cursor:pointer
+}
+.lis{   text-align:left}
+.lis li{ background:none;text-align:left}

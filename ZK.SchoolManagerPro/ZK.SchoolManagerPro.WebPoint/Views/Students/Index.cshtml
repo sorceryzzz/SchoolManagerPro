@@ -1,0 +1,204 @@
+﻿@using ZK.SchoolManagerPro.WebPoint.Common;
+@model System.Data.DataTable
+@{
+    ViewBag.Title = "学生管理";
+    Layout = null;
+    @Styles.Render("~/Content/css")
+}
+<html>
+<head>
+    <!-- HTTP 1.1 -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <!-- HTTP 1.0 -->
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!-- Prevents caching at the Proxy Server -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="generator" content="" />
+    <!-- leave this for stats please
+    <link rel="shortcut icon" href="/cbexpre/favicon.ico" type="image/x-icon"/> -->
+
+    <title>学生管理</title>
+    <!-- HTTP 1.1 -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <!-- HTTP 1.0 -->
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!-- Prevents caching at the Proxy Server -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="generator" content="" />
+    <!-- leave this for stats please
+    <link rel="shortcut icon" href="/cbexpre/favicon.ico" type="image/x-icon"/> -->
+    <link href="~/styles/css.css" rel="stylesheet" />
+    <link href="~/styles/pub.css" rel="stylesheet" />
+    <link href="~/static/styles/jquery/extend/fixedheadertable.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        var ctx_ = '/cbexpre';
+        var sfix_ = '.do';
+    </script>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <script type="text/javascript" src="~/static/scripts/jquery/validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/static/scripts/jquery/validate/jquery.validate.override.js"></script>
+    <script type="text/javascript" src="~/static/scripts/jquery/validate/messages_zh.js"></script>
+    <script type="text/javascript" src="~/static/scripts/jquery/extend/jquery.fixedheadertable.min.js"></script>
+
+    <script type="text/javascript" src="~/static/scripts/date/WdatePicker.js"></script>
+    <script type="text/javascript" src="~/static/scripts/app/message/app-message_zh_CN.js"></script>
+    <script type="text/javascript" src="~/static/scripts/app/app-js.min.js"></script>
+
+
+
+    <script src="~/static/scripts/added.js"></script>
+
+    <style type="text/css">
+        .botbox1 {
+            text-align: center;
+            margin: -2px auto;
+            border: #e8844c 0px solid;
+            border-top: none;
+            padding: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        function Delete(id)
+        {
+            if (confirm("确定要删除该学生吗?")) {
+                AjaxSubmit(id);
+            }
+        }
+        function AjaxSubmit(id)
+        {
+            $.post("/Students/DeleteUser", { id: id }, function (data) {
+                alert(data);
+                window.location.reload();
+            });
+        }
+
+        function OpenPage()
+        {
+            var dialog = art.dialog({
+                title: '欢迎',
+                content: '欢迎使用artDialog对话框组件！',
+                icon: 'succeed',
+                follow: document.getElementById('btn2'),
+                ok: function () {
+                    this.title('警告').content('请注意artDialog两秒后将关闭！').lock().time(2);
+                    return false;
+                }
+            });
+        }
+        function Reset(Id,userNumber)
+        {
+            if (confirm("确定要重置密码吗?")) {
+                $.post("/Students/ResetPassWord", { Id: Id,userNumber:userNumber }, function (data) {
+                    alert(data);
+                    window.location.reload();
+                });
+            }
+        }
+    </script>
+
+</head>
+<body style="overflow-x: auto;">
+    <div class="currentposition">
+        <div>
+            用户管理-学生列表
+        </div>
+    </div>
+    <!-- 查询模板 -->
+    <div class="search">
+        <form id="listForm" name="listForm" action="Index" method="post">
+
+            <div class="search_in">
+                <input type="hidden" id="currentPage" name="currentPage"
+                       value="1" />
+                <table width="100%" border="0" cellpadding="3" cellspacing="0">
+                    <tr>
+                        <td align="right">学号:</td>
+                        <td>
+                            <input type="text" name="number" value="@ViewBag.number" class="inputbor" />
+                        </td>
+
+                        <td align="right">姓名:</td>
+                        <td><input type="text" name="Name" value="@ViewBag.Name" class="inputbor" /></td>
+                    </tr>
+                    <tr>
+                        <td align="right">班级:</td>
+                        <td>
+                            @Html.DropDownList("Class", (IEnumerable<SelectListItem>)ViewBag.classList))
+                            @*<select name="Class">
+                                    <option>请选择</option>
+                                    <option>班级一</option>
+                                    <option>班级二</option>
+                                    <option>班级三</option>
+                                </select>*@
+                        </td>
+                        <td align="right">院系:</td>
+                        <td>
+                            @*<select name="department">
+                                    <option>请选择</option>
+                                    <option>计算机工程系</option>
+                                    <option>机械工程系</option>
+                                    <option>设计艺术系</option>
+                                </select>*@
+                            @Html.DropDownList("department", (IEnumerable<SelectListItem>)ViewBag.departmentList))
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="botbox">
+                <input name="sub1" type="submit" class="input" value="查询" />
+                <input name="sub3" type="button" class="input" value="重置" onclick="clearForm(this.form);" />
+            </div>
+        </form>
+    </div>
+
+    <div class="listable">
+        <input type="button" value="新增学生" onclick="doAction('../../Page/studentadd.html', 40, 50);">
+        &nbsp;&nbsp;
+        <input type="button" value="批量导入" onclick="doAction('../../Page/UploadStudents.html', 40, 29);">
+    </div>
+    <div class="listable" id="queryButton">
+
+        <table width="100%" border="0" cellpadding="3" cellspacing="0">
+            <tr>
+                <th width="10%">学号</th>
+                <th width="10%">姓名</th>
+                <th width="10%">性别</th>
+                @*<th width="10%">年龄</th>*@
+                <th width="10%">指导老师</th>
+                <th width="10%">院系</th>
+                <th width="10%">班级</th>
+                <th width="30%">操作</th>
+
+            </tr>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr align="center">
+                    <td>@row["user_num"].ToString()</td>
+                    <td>@row["user_name"].ToString()</td>
+                    <td>@(row["user_sex"].ToString() == "0" ? "男" : "女")</td>
+                    <td>@row["teacherName"].ToString()</td>
+                    <td>@row["department"].ToString()</td>
+                    <td>@row["class"].ToString()</td>
+                    <td>
+                        <input type="button" value="编辑" onclick="doAction('../../Page/studentEdit.html?id=@row["user_Id"]',40, 50);" />
+                        &nbsp;
+                        <input type="button" value="删除" onclick="Delete(@row["user_Id"]);" />
+                        &nbsp;
+                        <input type="button" value="密码重置" onclick="Reset(@row["user_Id"],@row["user_num"])" />
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="pagenum">
+        @Html.ShowPageNavigate((int)(ViewBag.PageIndex), (int)(ViewBag.PageSize), (int)(ViewBag.TotalCount), (string)ViewBag.RedirectTo, (string)ViewBag.Name, (string)ViewBag.number, (string)ViewBag.Class, (string)ViewBag.Department)
+    </div>
+</body>
+
+</html>

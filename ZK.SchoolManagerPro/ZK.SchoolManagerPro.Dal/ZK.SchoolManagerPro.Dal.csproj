@@ -42,11 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorityDal.cs" />
-    <Compile Include="RoleDal.cs" />
-    <Compile Include="RoleAuthorityDal.cs" />
-    <Compile Include="UserAuthorityDal.cs" />
-    <Compile Include="UserRoleDal.cs" />
+    <Compile Include="StudentDal.cs" />
     <Compile Include="UserDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

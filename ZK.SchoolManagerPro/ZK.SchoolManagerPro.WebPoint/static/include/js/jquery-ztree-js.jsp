@@ -1,0 +1,2 @@
+	<script type="text/javascript" src="${ctx}/static/scripts/jquery/ztree/jquery.ztree.core-3.4.min.js"></script>
+	<script type="text/javascript" src="${ctx}/static/scripts/jquery/ztree/jquery.ztree.excheck-3.4.min.js"></script>

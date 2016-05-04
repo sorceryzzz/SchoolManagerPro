@@ -1,0 +1,61 @@
+/*
+modal class
+*/
+.mask_modal_container {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	right: 0;
+	bottom: 0;
+	border: 0;
+	background-color: #000000;
+	filter: alpha(opacity = 25);
+	-moz-opacity: 0.25;
+	opacity: 0.25;
+}
+.modal_container { background:url(../images/window/a1.jpg) repeat-x top #FFF;
+	border: #ca6900 1px solid;
+	position: absolute;
+	opacity: 10;
+	box-shadow: 0 0 20px #979797;
+	display: none;
+ 
+	border-radius: 5px;
+}
+.modal_container_iframe {
+	position: absolute;
+	border-radius: 0 0 5px 5px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+}
+.modal_container_x {
+	position: absolute;
+	background: red;
+	top: 2px;
+	width: 18px;
+	height: 18px;
+	right: 10px;
+	background: url(../images/window/X.png);
+	cursor: pointer
+}
+.modal_container_x:hover {
+	position: absolute;
+	background: red;
+	top: 2px;
+	width: 18px;
+	height: 18px;
+	right: 10px;
+	background: url(../images/window/X.png) 18px 0;
+	cursor: pointer
+}
+.modal_container_native {
+	position:absolute;
+	top:22px;
+	left:0;
+	bottom:0;
+	right:0
+}
