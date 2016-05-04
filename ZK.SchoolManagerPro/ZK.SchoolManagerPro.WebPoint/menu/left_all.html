@@ -1,0 +1,75 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>管理</title>
+    <script type="text/javascript">
+		var ctx_ = '../';
+		var sfix_ = '.html';
+	</script>
+    <script type="text/javascript" src="../static/scripts/jquery/jquery-1.7.2.min.js" chardate="utf-8"></script>
+    <script type="text/javascript" src="../static/scripts/jquery/ztree/jquery.ztree.core-3.4.min.js"  chardate="utf-8"></script>
+    <script type="text/javascript" src="menudata_all.json"  chardate="utf-8"></script>   
+    <link href='../styles/css.css' rel="stylesheet" type="text/css" />
+	<link href='../styles/pub.css' rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="../static/styles/jquery/ztree/zTreeStyle.css" type="text/css">
+  </head>
+<script type="text/javascript">
+	function go2Url(event,treeId, node) {
+		if(node.turl == ""){return false;}
+		window.parent.frames["mainFrame"].location.href = node.turl;
+	}
+
+
+	var setting = {
+		async : {
+			enable : false,
+			url : 'menudata_all.json',
+			cache: false
+		},
+		callback : {
+			onClick : go2Url
+		},
+		data : {
+			simpleData : {
+				enable : true
+			}
+		},
+		view : {
+			autoCancelSelected : false,
+			expandSpeed : ""
+		}
+	};
+	var zTree;
+	$(function() {
+		$.fn.zTree.init($("#ztree"), setting, treeNodes);
+		zTree = $.fn.zTree.getZTreeObj("ztree");
+	});
+	
+	var setFlag = "0";
+	function setLeft() {
+		if("0" == setFlag){
+			setFlag = "1";
+			setImg.src = "../images/suo_06.jpg";
+			parent.menuSet.cols = "13px,*";
+		} else {
+			setFlag = "0";
+			setImg.src = "../images/suo_03.jpg";
+			parent.menuSet.cols = "16%,*";
+		}
+	}
+</script>
+ 
+</head>
+<body style="background:url(../images/ard_20.jpg)  repeat-y right;margin:0;padding:0">
+
+<div style="position:absolute;top:40%;right:0" onclick="setLeft()"><img id="setImg" src="../images/suo_03.jpg"  /></div>
+
+<div style=" background:url(../images/ard_09.jpg);border-bottom:#fa4e4e 1px solid; ">  
+ <img src="../images/ard_07.jpg"  /></div>
+	<div class="zTreeDemoBackground left">
+		<ul id="ztree" class="ztree"></ul>
+	</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+﻿@import url("comm.css");
+body {
+	background:url(../images/ard_03.jpg) repeat-x top;
+	margin:0
+}
+/*首页和退出按钮*/
+.index_bot , .tuichu_bot {
+	margin-right:15px;
+	float:right;
+	text-align:center;
+}
+.index_bot a,.tuichu_bot a {	background:url(../images/b1.jpg) no-repeat; width:67px; height:56px; text-decoration:none;
+	display:block;
+}
+.index_bot a:hover,.tuichu_bot a:hover  {
+	background:url(../images/b2.jpg) no-repeat;
+
+}
+.index_bot a div,.tuichu_bot a  div{color:#FFF}
+.index_bot a div,.tuichu_bot a  div{ padding-top:5px}
+ 
+/*系统名*/
+.bannerword {
+}
+/*角色名*/
+.role {
+	padding-right:10px;
+	color:#FFF
+}
+.toptitle {
+	background:url(acc_19.gif) repeat-x top;
+	padding:3px;
+}
+.toptitle div {
+	float:left;
+	background:url(acc_17.gif) no-repeat right;
+	padding:0 10px;
+}
+.toptitle div a:link, .toptitle div a:visited, .toptitle div a:hover {
+	font-size:14px;
+	color:#FFF;
+	font-weight:bold
+}

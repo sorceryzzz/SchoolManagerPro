@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="~/styles/css.css" rel="stylesheet" />
+    <link href="~/styles/pub.css" rel="stylesheet" />
+    <link href="~/static/styles/jquery/extend/fixedheadertable.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/jquery-form.js"></script>
+    <style type="text/css">
+        .input {
+            background: #d93c42 url("../images/anbg.jpg") repeat-x scroll center top;
+            border: 1px solid #cf2c30;
+            border-radius: 5px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <form id="myform" action="../Students/SaveFile" method="post" enctype="multipart/form-data">
+        <div>
+            <input name="filePath" value="浏览" type="file" id="file" style="float:left;width:200px;" />
+            <input type="button" id="btn" class="input" value="批量导入学生信息" style="float:left;width:200px; margin-left:20px;" />
+        </div>
+        <br />
+        <div>
+            <p style="color:red">(请选择xls和xlsx格式的Excel文件)</p>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btn').click(function () {
+                $('#myform').ajaxSubmit(function (data) {
+                    alert(data);
+                    top.window.location.href = top.window.location.href;
+                    window.onbeforeunload();
+                });
+
+            });
+
+        });
+    </script>
+</body>
+</html>

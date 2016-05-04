@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <base target="_self">
+    <title>新增学生</title>
+    <!-- HTTP 1.1 -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <!-- HTTP 1.0 -->
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!-- Prevents caching at the Proxy Server -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="generator" content="" />
+    <!-- leave this for stats please
+    <link rel="shortcut icon" href="/cbexpre/favicon.ico" type="image/x-icon"/> -->
+    <link href="../styles/css.css" rel="stylesheet" />
+    <link href="../styles/css.css" rel="stylesheet" />
+    <link href="../styles/pub.css" rel="stylesheet" />
+    <!--<link href="../static/styles/jquery/extend/fixedheadertable.css" rel="stylesheet" />-->
+    <script type="text/javascript">
+        var ctx_ = '/cbexpre';
+        var sfix_ = '.do';
+    </script>
+    <script type="text/javascript" src="../static/scripts/jquery/jquery-1.7.2.min.js"></script>
+
+    <!--<script type="text/javascript" src="../static/scripts/jquery/validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery/validate/jquery.validate.override.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery/validate/messages_zh.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery/extend/jquery.fixedheadertable.min.js"></script>
+
+    <script type="text/javascript" src="../static/scripts/date/WdatePicker.js"></script>
+    <script type="text/javascript" src="../static/scripts/app/message/app-message_zh_CN.js"></script>
+
+               <script src="../static/scripts/added.js"></script>
+        -->
+    <script type="text/javascript" src="../static/scripts/app/app-js.min.js"></script>
+
+
+    <script type="text/javascript">
+        function closeWindow() {
+            top.window.location.href = top.window.location.href;
+        }
+
+        function GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]); return null;
+        }
+
+        $(function () {
+
+            var id = GetQueryString("id");
+            $("#userId").val(id);
+            $.post("../Students/GetModel", { id: id }, function (data) {
+                var model = eval("(" + data + ")");
+                $("#projectNo").val(model.UserNum);
+                $("#UserName").val(model.UserName);
+                var sex = model.Sex;
+                if (sex == '0') {
+
+                    $("#rdBoy").attr("checked", "checked");
+                }
+                else {
+                    $("#rdGirl").attr("checked", "checked");
+                }
+                $("#teacherName").val(model.TeacherName);
+                $("#sltClass").val(model.Class);
+                $("#sltDepart").val(model.Department);
+            });
+
+
+            $("#btnSave").click(function () {
+                
+                var userNum = $("#projectNo").val();
+                var userName = $("#UserName").val();
+                var sex = $("#rdBoy").attr("checked");
+                if (sex == "checked") {
+                    sex = 0;
+                }
+                else {
+                    var girl = $("#rdGirl").attr("checked");
+                    if (girl == "checked") {
+                        sex = 1;
+                    }
+                    else {
+                        sex = -1;
+                    }
+                }
+                var teacher = $("#teacherName").val();
+                var Class = $("#sltClass").val();
+                var Depart = $("#sltDepart").val();
+                var id = $("#userId").val();
+                if (userNum == "") {
+                    $("#numberSpan").text("请输入学生编号！");
+                    return;
+                }
+                else {
+                    $("#numberSpan").text("");
+                }
+                if (userName == "") {
+                    $("#userNameSpan").text("请输入学生姓名！");
+                    return;
+                }
+                else {
+                    $("#userNameSpan").text("");
+                }
+                if (sex == -1) {
+                    $("#sexSpan").text("请选择性别！");
+                    return;
+                }
+                else {
+                    $("#sexSpan").text("");
+                }
+                if (teacher == "") {
+                    $("#teacherSpan").text("请选择指导老师！");
+                    return;
+                } else {
+                    $("#teacherSpan").text("");
+                }
+                if (Class == "") {
+                    $("#classSpan").text("请选择班级！");
+                    return;
+                }
+                else {
+                    $("#classSpan").text("");
+                }
+                if (Depart == "") {
+                    $("#DepartSpan").text("请选择院系！");
+                    return;
+                }
+                else {
+                    $("#DepartSpan").text("");
+                }
+
+                $.post("../Students/Edit", { ID: id, UserNum: userNum, UserName: userName, Sex: sex, TeacherName: teacher, Class: Class, Department: Depart }, function (data) {
+                    if (data == "ok") {
+                        alert("保存成功");
+                        top.window.location.href = top.window.location.href;
+                        window.onbeforeunload();
+                    }
+                    else {
+                        alert(data);
+                    }
+                });
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div align="left" style="width: 100%">
+        <form id="pubProject" name="pubProject" method="post">
+            <input type="hidden" id="userId" />        
+            <!-- hidden -->
+            <div class="content_box">
+                <table align="center" cellpadding="3" cellspacing="0">
+                    <tr>
+                        <td class="title" align="center">学生信息</td>
+                    </tr>
+                </table>
+                <table align="center" cellpadding="3" cellspacing="0">
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>学号:</th>
+                        <td width="80%" align="left" style="border-bottom-width: 0px">
+                            <input type="text" id="projectNo" name="projectNo" value="" size="25" maxlength="32" />
+                            <span id="numberSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>学生姓名:</th>
+                        <td align="left" style="border-bottom-width: 0px">
+                            <input type="text" id="UserName" name="UserName" value="" size="25" maxlength="64" />
+                            <span id="userNameSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>性别:</th>
+                        <td align="left" style="border-bottom-width: 0px">
+                            <input type="radio" id="rdBoy" name="projectName" value="男" />男
+                            &nbsp;&nbsp;
+                            <input type="radio" id="rdGirl" name="projectName" value="女" />女
+                            <span id="sexSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>指导老师:</th>
+                        <td align="left" style="border-bottom-width: 0px">
+                            <input type="text" id="teacherName" name="projectName" value="" size="25" maxlength="64" />
+                            <span id="teacherSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>班级:</th>
+                        <td align="left" style="border-bottom-width: 0px">
+                            <select id="sltClass">
+                                <option value="班级一">班级一</option>
+                                <option value="班级二">班级二</option>
+                                <option value="班级三">班级三</option>
+                            </select>
+                            <span id="classSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>所属院系:</th>
+                        <td align="left" style="border-bottom-width: 0px">
+                            <select id="sltDepart">
+                                <option value="计算机工程系">计算机工程系</option>
+                                <option value="机械工程系">机械工程系</option>
+                                <option value="设计艺术系">设计艺术系</option>
+                            </select>
+                            <span id="DepartSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- button -->
+            <div class="botbox">
+                <!--<sec:authorize url="/biz/tx/pstr/101407">-->
+                <input type="button" value="保存" class="input" id="btnSave" />
+                <!--</sec:authorize>-->
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <sec:authorize url="/biz/tx/pstr/101400">
+                    <input type="button" value="取消" class="input" onclick="wcancel();">
+                </sec:authorize>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

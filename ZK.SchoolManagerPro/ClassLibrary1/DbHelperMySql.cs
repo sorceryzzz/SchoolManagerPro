@@ -463,6 +463,46 @@ namespace Dinlun.GatewaySite.Common
             }
             return true;
         }
+
+
+        /// <summary>
+        /// execute a trascation include one or more sql sentence(author:donne yin)
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="cmdType"></param>
+        /// <param name="cmdTexts"></param>
+        /// <param name="commandParameters"></param>
+        /// <returns>execute trascation result(success: true | fail: false)</returns>
+        public static bool ExecuteTransactionNew(string connectionString, CommandType cmdType, string[] cmdTexts, params MySqlParameter[][] commandParameters)
+        {
+            MySqlConnection myConnection = new MySqlConnection(connectionString);       //get the connection object
+            myConnection.Open();                                                        //open the connection
+            MySqlTransaction myTrans = myConnection.BeginTransaction();                 //begin a trascation
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.Connection = myConnection;
+            cmd.Transaction = myTrans;
+
+            try
+            {
+                for (int i = 0; i < cmdTexts.Length; i++)
+                {
+                    PrepareCommand(cmd, myConnection, null, cmdType, cmdTexts[i], null);
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+                }
+                myTrans.Commit();
+            }
+            catch
+            {
+                myTrans.Rollback();
+                return false;
+            }
+            finally
+            {
+                myConnection.Close();
+            }
+            return true;
+        }
         #endregion
     }
 

@@ -1,0 +1,199 @@
+﻿@import url("comm.css");
+body {
+	padding:6px;
+	background:url(../images/bg_main.jpg) repeat-x top #fef6f5;
+}
+/*当前位置*/
+.currentposition {
+	border:#f3b087 1px solid;
+	border-bottom:#f8c58c 1px solid;
+	background:url(../images/ard_12.jpg) repeat-x bottom #fff;
+	padding:0 10px;
+	border-radius:5px 5px 0 0;
+}
+.currentposition div {
+	text-indent:20px;
+	line-height:28px;
+	background:url(../images/hx_18.gif) no-repeat left;
+	color:#464646;
+	font-weight:bold
+}
+/*搜索*/
+.search {
+	background:url(../images/ard_18.jpg) repeat-x 0 -10px #fff;
+	border:#f3b087 1px solid;border-top:none;
+	padding:10px; 
+	border-radius:0 0 5px 5px;
+}
+/*搜索条件下的按钮*/
+.search th{ padding-top:15px;}
+.search td {
+	font-weight:bold;
+	color:#6d6d6d; padding:5px;
+}
+.search #queryButton,.search .botbox {
+	text-align:center;background:none;border:none;
+	padding-top:20px;
+}
+#queryButton input,.search .botbox input {
+	font-family:微软雅黑;
+	background:url(../images/anbg01.jpg) left top #d11f1b;
+	border:#e56b19 1px solid;
+	height:23px; line-height:20px;
+	color:#FFF;
+	padding:0 10px;
+	margin:0 5px;
+	font-weight:bold;
+	cursor:pointer;
+}
+.search th input.button {
+	font-family:微软雅黑;
+	background:url(../images/anbg01.jpg) left top #d11f1b;
+	border:#e56b19 1px solid;
+	height:23px; line-height:20px;
+	color:#FFF;
+	padding:0 10px;
+	margin:0 5px;
+	font-weight:bold;
+	cursor:pointer;
+}
+#queryButton input.new,.search .botbox input.new {
+	border:#c14b53 1px solid;
+	background:url(../images/newbg.jpg) top no-repeat #ce0110
+}
+/*列表样式*/
+.listable {
+	padding-top:5px;overflow-x:auto
+
+}
+.listable table{ width:100%;	background:#FFF;}
+.listable table td, .listable table th {
+	border:#f38787 1px solid; padding:3px
+}
+.listable th{ background:url(../images/ard_25.jpg); color:#FFF}
+.listable table td input, .listable table th input {
+	background:none;
+	border:none
+}
+#pager table td {
+	background:url(../images/hx_43.gif) repeat-x bottom #fff;
+	color:#000
+}
+/*列表下的翻页*/
+.pagenum {
+	background:url(../images/hx_43.gif) repeat-x bottom #fff;
+	border:#f38787 1px solid;
+	border-top:none;
+	text-align:right;
+	padding:2px 8px;
+}
+input.page_button {
+	border:none;
+	background:none;
+	font-size:12px;
+	border-radius:5px;
+}
+/*以下为新建、修改、查看页样式*/
+.listnew {
+	background:url(../images/hx_43.gif) repeat-x bottom #fff;
+	border:#f38787 1px solid;
+	border-bottom:none;
+	text-align:right;
+	padding:2px 8px;
+}
+.listnew input{	border:#c14b53 1px solid;
+	background:url(../images/newbg.jpg) top no-repeat #ce0110;	height:23px; line-height:20px;
+	color:#FFF;
+	padding:0 10px;
+	margin:0 5px;
+	font-weight:bold;
+	cursor:pointer; 
+ 
+}
+/*表格样式*/
+.content_box {
+	margin-top:-1px
+}
+.content_box table {
+	width:100%;
+	background:#FFF
+}
+.content_box table th, .content_box table td {
+	border:#edc79e 1px solid;
+	padding:3px;
+}
+.content_box table th {
+	background:#fffadc;
+	color:#453c3c;
+	white-space:nowrap;
+}
+.content_box .title {
+	background:url(../images/title_bg.jpg) repeat-x bottom #ffc09c;
+	color:#840707;
+	padding:0 10px;
+	line-height:25px;
+	font-weight:bold;
+}
+/*表格下的按钮*/
+  .botbox {
+	text-align:center;
+	background:#fff4cc;
+	border:#e8844c 1px solid;
+	border-top:none;
+	padding:5px;
+}
+.content_box input, .content_box select, .content_box textarea {
+	border:#dcaeb8 1px solid;
+}
+ .botbox input, input.com_in,input.input,input[type="button"]{
+	border:#cf2c30 1px solid;
+	background:url(../images/anbg.jpg) repeat-x top #d93c42;
+	font-size:12px;
+	border-radius:5px;
+	line-height:20px;
+	color:#FFF;
+	font-weight:bold;
+	cursor:pointer
+}
+/*用于不需边框的文本框*/
+.nobor, .nobor input, .nobor p input {
+	border:none;
+	background:none
+}
+/*宽为95%的文本框*/
+.inpercent {
+	width:95%
+}
+/*大文本框*/
+.ioio select {
+	width:100%;
+	height:200px;
+}
+.power td {
+	border-bottom:#999 1px solid
+}
+.power td input {
+	border:none;
+	background:none;
+	margin-left:5px
+}
+input.addinput {
+	float:right;
+	background:url(../images/ser_10_1.jpg) repeat-x top;
+	border:#b10b0f 1px solid;
+	color:#840707;
+	padding:3px 10px;
+	font-weight:bold;
+}
+
+
+
+.eos-ic-button,.eos-ic-button1
+{background:url(../images/lookup/lookup_button.gif) no-repeat;
+	width: 18px;  
+	vertical-align: bottom;
+	cursor: pointer;
+	height: 22px;
+}
+
+.eos-ic-container{ float:left}
