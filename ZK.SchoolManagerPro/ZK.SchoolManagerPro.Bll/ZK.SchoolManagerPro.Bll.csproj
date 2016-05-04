@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="t_authority.cs" />
+    <Compile Include="t_role.cs" />
+    <Compile Include="t_role_authority.cs" />
+    <Compile Include="t_user_authority.cs" />
+    <Compile Include="UserRoleBll.cs" />
     <Compile Include="UserBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
