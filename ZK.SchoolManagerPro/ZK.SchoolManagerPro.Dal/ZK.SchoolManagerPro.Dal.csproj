@@ -42,9 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorityDal.cs" />
+    <Compile Include="RoleAuthorityDal.cs" />
+    <Compile Include="RoleDal.cs" />
     <Compile Include="StudentDal.cs" />
+    <Compile Include="UserAuthorityDal.cs" />
     <Compile Include="UserDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserRoleDal.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibrary1\ZK.SchoolManagerPro.Common.csproj">
