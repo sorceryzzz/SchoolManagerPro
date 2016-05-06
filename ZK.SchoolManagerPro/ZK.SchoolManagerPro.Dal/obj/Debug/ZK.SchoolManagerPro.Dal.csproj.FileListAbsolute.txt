@@ -8,3 +8,12 @@ E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManage
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Model.dll
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ClassLibrary1.pdb
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Model.pdb
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\obj\Debug\ZK.SchoolManagerPro.Dal.csprojResolveAssemblyReference.cache
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Dal.dll
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Dal.pdb
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ClassLibrary1.dll
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Model.dll
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ClassLibrary1.pdb
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\bin\Debug\ZK.SchoolManagerPro.Model.pdb
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\obj\Debug\ZK.SchoolManagerPro.Dal.dll
+E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Dal\obj\Debug\ZK.SchoolManagerPro.Dal.pdb
