@@ -295,10 +295,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                 return Content("修改失败！");
             }
         }
-        public ActionResult EditStudent()
-        {
-            return View();
-        }
+
         public ActionResult Edit(Students student)
         {
             Students model = new Students();

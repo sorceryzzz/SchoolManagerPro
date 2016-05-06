@@ -10,15 +10,3 @@ E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManage
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Dal.pdb
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Model.pdb
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ClassLibrary1.pdb
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Bll.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Bll.pdb
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Dal.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Model.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\MySql.Data.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ClassLibrary1.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Dal.pdb
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ZK.SchoolManagerPro.Model.pdb
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\bin\Debug\ClassLibrary1.pdb
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\obj\Debug\ZK.SchoolManagerPro.Bll.csprojResolveAssemblyReference.cache
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\obj\Debug\ZK.SchoolManagerPro.Bll.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ZK.SchoolManagerPro.Bll\obj\Debug\ZK.SchoolManagerPro.Bll.pdb

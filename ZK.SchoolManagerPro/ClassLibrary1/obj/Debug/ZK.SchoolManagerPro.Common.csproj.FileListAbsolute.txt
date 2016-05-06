@@ -3,7 +3,3 @@ E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ClassLibrary1\b
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ClassLibrary1\bin\Debug\MySql.Data.dll
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ClassLibrary1\obj\Debug\ClassLibrary1.dll
 E:\WorkSpace\SourceCode\NET\SchoolManagerPro\ZK.SchoolManagerPro\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ClassLibrary1\bin\Debug\ClassLibrary1.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ClassLibrary1\obj\Debug\ClassLibrary1.dll
-E:\王新阳\彭博文\myschool\ZK.SchoolManagerPro\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
