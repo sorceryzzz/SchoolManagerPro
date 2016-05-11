@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Caching;
 
 namespace ZK.SchoolManagerPro.BLL
 {
     /// <summary>
     /// 业务逻辑类 t_authority
     /// </summary>
-    public class t_authority: BLHelper
+    public class t_authority
     {
-        private readonly ZK.SchoolManagerPro.DAL.t_authority dal = new ZK.SchoolManagerPro.DAL.t_authority();
+        private readonly ZK.SchoolManagerPro.DAL. t_authority dal = new ZK.SchoolManagerPro.DAL.t_authority();
 
-        public t_authority()
-            : base("_t_authority_") { }
 
         /// <summary>
         /// 增加一条数据
@@ -27,25 +24,19 @@ namespace ZK.SchoolManagerPro.BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public void Update(ZK.SchoolManagerPro.Model.t_authority model)
+        public int Update(ZK.SchoolManagerPro.Model.t_authority model)
         {
             int count = dal.Update(model);
-            if (EnableCache && count > 0)
-            {
-                RemoveModelCache(model.ah_id);
-            }
+            return count;
         }
 
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public void Delete(int? ah_id)
+        public int Delete(int? ah_id)
         {
             int count = dal.Delete(ah_id);
-            if (EnableCache && count > 0)
-            {
-                RemoveModelCache(ah_id.ToString());
-            }
+            return count;
         }
 
         /// <summary>
@@ -63,23 +54,9 @@ namespace ZK.SchoolManagerPro.BLL
         public ZK.SchoolManagerPro.Model.t_authority GetModel(int? ah_id)
         {
             ZK.SchoolManagerPro.Model.t_authority model = null;
-            if (!EnableCache)
-            {
-                model = dal.GetModel(ah_id);
-            }
-            else
-            {
-                string key = ah_id.ToString();
-                if (GetModelCache(key) != null)
-                {
-                    model = (ZK.SchoolManagerPro.Model.t_authority)GetModelCache(key);
-                }
-                else
-                {
-                    model = dal.GetModel(ah_id);
-                    TryAddModelCache(key, model, null, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-                }
-            }
+           
+            model = dal.GetModel(ah_id);
+           
             return model;
         }
 
@@ -90,15 +67,6 @@ namespace ZK.SchoolManagerPro.BLL
         {
             List<ZK.SchoolManagerPro.Model.t_authority> lst = dal.GetList();
             return lst;
-        }
-
-        /// <summary>
-        /// 分页获取泛型数据列表
-        /// </summary>
-        public PageList<ZK.SchoolManagerPro.Model.t_authority> GetPageList(PageInfo pi)
-        {
-            PageList<ZK.SchoolManagerPro.Model.t_authority> pl = dal.GetPageList(pi);
-            return pl;
         }
     }
 }

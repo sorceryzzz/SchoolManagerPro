@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
-using System.Web.Caching;
 
 namespace ZK.SchoolManagerPro.BLL
 {
@@ -53,24 +52,9 @@ namespace ZK.SchoolManagerPro.BLL
         /// </summary>
         public ZK.SchoolManagerPro.Model.t_user_role GetModel(int? t_urid)
         {
-            ZK.SchoolManagerPro.Model.t_user_role model = null;
-            if (!EnableCache)
-            {
-                model = dal.GetModel(t_urid);
-            }
-            else
-            {
-                string key = t_urid.ToString();
-                if (GetModelCache(key) != null)
-                {
-                    model = (ZK.SchoolManagerPro.Model.t_user_role)GetModelCache(key);
-                }
-                else
-                {
-                    model = dal.GetModel(t_urid);
-                    TryAddModelCache(key, model, null, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.Normal, null);
-                }
-            }
+         
+             var   model = dal.GetModel(t_urid);
+        
             return model;
         }
 
@@ -83,13 +67,5 @@ namespace ZK.SchoolManagerPro.BLL
             return lst;
         }
 
-        /// <summary>
-        /// 分页获取泛型数据列表
-        /// </summary>
-        public PageList<ZK.SchoolManagerPro.Model.t_user_role> GetPageList(PageInfo pi)
-        {
-            PageList<ZK.SchoolManagerPro.Model.t_user_role> pl = dal.GetPageList(pi);
-            return pl;
-        }
     }
 }
