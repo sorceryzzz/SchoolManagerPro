@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,7 +7,7 @@ namespace ClassLibrary1
 {
     public static  class PageHelper
     {
-        public static HtmlString ShowPageNavigate(this HtmlHelper helper, int currentPage, int pageSize, int totalCount, string redirectTo, string Name, string number, string Class, string department)
+        public static HtmlString ShowPageNavigate(int currentPage, int pageSize, int totalCount, string redirectTo, string Name, string number, string Class, string department)
         {
             pageSize = pageSize == 0 ? 3 : pageSize;
             var totalPages = Math.Max((totalCount + pageSize - 1) / pageSize, 1); //总页数
@@ -45,7 +42,6 @@ namespace ClassLibrary1
 
             return new HtmlString(output.ToString());
         }
-
 
         public static HtmlString ShowTeaPageNavigate(this HtmlHelper helper, int currentPage, int pageSize, int totalCount, string redirectTo, string Name, string number, string department)
         {
@@ -92,6 +88,5 @@ namespace ClassLibrary1
 
             return new HtmlString(output.ToString());
         }
-
     }
 }
