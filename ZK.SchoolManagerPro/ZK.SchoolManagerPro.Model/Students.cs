@@ -14,6 +14,7 @@ namespace ZK.SchoolManagerPro.Model
         public int User_Category { get; set; }
         public string TeacherName { get; set; }
         public int Sex { get; set; }
+        public int Age { get; set; }
         public string Department { get; set; }
         public string Class { get; set; }
         public string Address { get; set; }

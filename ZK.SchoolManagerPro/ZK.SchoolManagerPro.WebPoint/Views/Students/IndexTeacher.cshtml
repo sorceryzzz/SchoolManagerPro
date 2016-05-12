@@ -1,5 +1,7 @@
 ﻿@using ZK.SchoolManagerPro.WebPoint.Common;
+@using ClassLibrary1;
 @model System.Data.DataTable
+ 
 @{
     ViewBag.Title = "教师管理";
     Layout = null;
@@ -110,7 +112,7 @@
     </div>
     <!-- 查询模板 -->
     <div class="search">
-        <form id="listForm" name="listForm" action="Index" method="post">
+        <form id="listForm" name="listForm" action="IndexTeacher" method="post">
 
             <div class="search_in">
                 <input type="hidden" id="currentPage" name="currentPage"
@@ -147,9 +149,9 @@
     </div>
 
     <div class="listable">
-        <input type="button" value="新增学生" onclick="doAction('../../Page/studentadd.html', 40, 50);">
-        &nbsp;&nbsp;
-        <input type="button" value="批量导入" onclick="doAction('../../Page/UploadStudents.html', 40, 29);">
+        <input type="button" value="新增教师" onclick="doAction('../../Page/TeacherAdd.html', 40, 50);">
+        @*&nbsp;&nbsp;
+        <input type="button" value="批量导入" onclick="doAction('../../Page/UploadStudents.html', 40, 29);">*@
     </div>
     <div class="listable" id="queryButton">
 
@@ -174,18 +176,20 @@
                     <td>@row["position"].ToString()</td>
                     <td>@row["department"].ToString()</td>
                     <td>
-                        <input type="button" value="编辑" onclick="doAction('../../Page/studentEdit.html?id=@row["user_Id"]',40, 50);" />
+                        <input type="button" value="编辑" onclick="doAction('../../Page/TeacherEdit.html?id=@row["user_Id"]',40, 50);" />
                         &nbsp;
                         <input type="button" value="删除" onclick="Delete(@row["user_Id"]);" />
                         &nbsp;
                         <input type="button" value="密码重置" onclick="Reset(@row["user_Id"],@row["user_num"])" />
                     </td>
-
+                    
                 </tr>
             }
         </table>
     </div>
-
+    <div class="pagenum">
+        @Html.ShowTeaPageNavigate((int)(ViewBag.PageIndex), (int)(ViewBag.PageSize), (int)(ViewBag.TotalCount), (string)ViewBag.RedirectTo, (string)ViewBag.Name, (string)ViewBag.number, (string)ViewBag.Department)
+    </div>
 </body>
 
 </html>

@@ -35,7 +35,7 @@ namespace ZK.SchoolManagerPro.Dal
 
         public int Edit(Students model)
         {
-            string cmdText = string.Format("UPDATE t_users SET user_name=@name,user_num=@num,teacherName=@teacher,user_sex=@sex,department=@department,class=@class WHERE user_Id=@Id");
+            string cmdText = string.Format("UPDATE t_users SET user_name=@name,user_num=@num,teacherName=@teacher,user_sex=@sex,department=@department,class=@class,age=@age,position=@position WHERE user_Id=@Id");
             MySqlParameter[] parms ={
                                     new MySqlParameter("@name",MySqlDbType.VarChar),
                                     new MySqlParameter("@num",MySqlDbType.VarChar),
@@ -43,7 +43,9 @@ namespace ZK.SchoolManagerPro.Dal
                                     new MySqlParameter("@sex",MySqlDbType.Int32),
                                     new MySqlParameter("@department",MySqlDbType.VarChar),
                                     new MySqlParameter("@class",MySqlDbType.VarChar),
-                                    new MySqlParameter("@Id",MySqlDbType.Int32)
+                                    new MySqlParameter("@Id",MySqlDbType.Int32),
+                                    new MySqlParameter("@age",MySqlDbType.Int32),
+                                    new MySqlParameter("@position",MySqlDbType.VarChar)
                                    };
             parms[0].Value = model.UserName;
             parms[1].Value = model.UserNum;
@@ -52,22 +54,25 @@ namespace ZK.SchoolManagerPro.Dal
             parms[4].Value = model.Department;
             parms[5].Value = model.Class;
             parms[6].Value = model.ID;
+            parms[7].Value = model.Age;
+            parms[8].Value = model.Position;
             return DbHelperMySql.ExecuteNonQuery(DbHelperMySql.ConnectionStringManager, CommandType.Text, cmdText, parms);
         }
 
         public int Add(Students model)
         {
-            string cmdText = string.Format("INSERT INTO  t_users (user_name,user_num,teacherName,user_sex,department,class,user_category,state,position) VALUES(@name,@num,@teacher,@sex,@department,@class,@category,@state,@position)");
+            string cmdText = string.Format("INSERT INTO  t_users (user_name,user_num,teacherName,user_sex,age,department,class,user_category,state,position) VALUES(@name,@num,@teacher,@sex,@age,@department,@class,@category,@state,@position)");
             MySqlParameter[] parms ={
                                     new MySqlParameter("@name",MySqlDbType.VarChar),
                                     new MySqlParameter("@num",MySqlDbType.VarChar),
                                     new MySqlParameter("@teacher",MySqlDbType.VarChar),
-                                    new MySqlParameter("@sex",MySqlDbType.Int32),
+                                    new MySqlParameter("@sex",MySqlDbType.Int32),                                    
                                     new MySqlParameter("@department",MySqlDbType.VarChar),
                                     new MySqlParameter("@class",MySqlDbType.VarChar),
                                     new MySqlParameter("@category",MySqlDbType.Int32),
                                     new MySqlParameter("@state",MySqlDbType.Int32),
-                                    new MySqlParameter("@position",MySqlDbType.VarChar)
+                                    new MySqlParameter("@position",MySqlDbType.VarChar),
+                                    new MySqlParameter("@age",MySqlDbType.Int32)
                                    };
             parms[0].Value = model.UserName;
             parms[1].Value = model.UserNum;
@@ -78,6 +83,7 @@ namespace ZK.SchoolManagerPro.Dal
             parms[6].Value = model.User_Category;
             parms[7].Value = model.state;
             parms[8].Value = model.Position;
+            parms[9].Value = model.Age;
             return DbHelperMySql.ExecuteNonQuery(DbHelperMySql.ConnectionStringManager, CommandType.Text, cmdText, parms);
         }
 
@@ -86,7 +92,7 @@ namespace ZK.SchoolManagerPro.Dal
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public int ResetPassword(int Id,string password)
+        public int ResetPassword(int Id, string password)
         {
             string cmdText = "UPDATE t_users SET user_password=@password WHERE user_Id=@Id";
             MySqlParameter[] parms ={
@@ -101,7 +107,7 @@ namespace ZK.SchoolManagerPro.Dal
 
         public Students GetModel(int Id)
         {
-            string cmdText = "SELECT user_Id,user_name,user_num,user_sex,teacherName,department,class FROM t_users WHERE user_Id=@user_Id";
+            string cmdText = "SELECT user_Id,user_name,user_num,user_sex,teacherName,department,class,age,position FROM t_users WHERE user_Id=@user_Id";
             MySqlParameter[] parms =
             {
                 new MySqlParameter("@user_Id",MySqlDbType.Int32)
@@ -116,6 +122,26 @@ namespace ZK.SchoolManagerPro.Dal
             else
             {
                 return null;
+            }
+        }
+
+        public bool GetModel(string userNum)
+        {
+            string cmdText = "SELECT user_Id,user_name,user_num,user_sex,teacherName,department,class FROM t_users WHERE user_num=@userNumber";
+            MySqlParameter[] parms =
+            {
+                new MySqlParameter("@userNumber",MySqlDbType.VarChar)
+            };
+            parms[0].Value = userNum;
+            MySqlDataReader reader = DbHelperMySql.ExecuteReader(DbHelperMySql.connectionStringManager, CommandType.Text, cmdText, parms);
+            List<Students> list = ExecuteList(reader);
+            if (list.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -134,8 +160,10 @@ namespace ZK.SchoolManagerPro.Dal
                     model.TeacherName = reader["teacherName"].ToString();
                     model.Department = reader["department"].ToString();
                     model.Class = reader["class"].ToString();
+                    model.Age = reader["age"] == DBNull.Value ? 0 : Convert.ToInt32(reader["age"]);
+                    model.Position = reader["position"].ToString();
                     list.Add(model);
-                } 
+                }
             }
             catch (Exception ex)
             {

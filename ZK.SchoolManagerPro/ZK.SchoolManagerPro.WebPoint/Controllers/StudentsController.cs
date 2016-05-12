@@ -1,4 +1,5 @@
-﻿using Dinlun.GatewaySite.Common;
+﻿using ClassLibrary1;
+using Dinlun.GatewaySite.Common;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
@@ -105,13 +106,60 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             return View(dt);
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult GetCode()
+        {
+            //实例化验证码类
+            ValidateCodeHelper validateCode = new ValidateCodeHelper();
+            //生成验证码指定的长度
+            string code = validateCode.CreateValidateCode(4);
+            //将验证码赋值给Session变量
+            Session["ValidateCode"] = code;
+            //创建验证码的图片
+            byte[] bytes = validateCode.CreateValidateGraphic(code);
+            //将验证码返回
+            return File(bytes, @"image/jpeg");
+
+        }
+
+        public ActionResult CheckLogin()
+        {
+            string userName = Request.Form["name"];
+            string userPwd = Request.Form["password"];
+            string code = Request.Form["code"];
+            if (userName == "123" && userPwd == "123")
+            {
+                string sessionCode = Session["ValidateCode"].ToString();
+                if (code.Equals(sessionCode))
+                {
+                    HttpCookie cookie = new HttpCookie("zkUser", userName);
+                    cookie.Expires = DateTime.Now.AddHours(5);
+                    cookie.Path = "/";
+                    cookie.HttpOnly = false;
+                    Response.Cookies.Add(cookie);
+                    return Content("ok");
+                }
+                else
+                {
+                    return Content("验证码不正确");
+                }
+            }
+            else
+            {
+                return Content("用户名或密码不正确");
+            }
+        }
 
         public ActionResult IndexTeacher(int? pageIndex, string Name, string number,string department)
         {
             if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
             ViewBag.RedirectTo = "/Students/IndexTeacher/";
             ViewBag.PageIndex = pageIndex;
-            ViewBag.PageSize = 5;
+            ViewBag.PageSize = 2;
 
             #region 筛选条件
 
@@ -158,17 +206,12 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             DataTable dt = bll.GetStudetnsList(pageIndex.Value, ViewBag.PageSize, sqlWhere, "user_Id,user_name,user_num,user_sex,teacherName,department,age,position", "user_Id");
             ViewBag.departmentList = departmentList;
             ViewBag.Department = department;
-            ViewBag.Class = "班级三";
             ViewBag.TotalCount = count;
             ViewBag.Name = Name;
             ViewBag.number = number;
             return View(dt);
         }
 
-        public ActionResult UploadPage()
-        {
-            return View();
-        }
         public ActionResult SaveFile()
         {
             //string data = Request.Form["data"];
@@ -288,11 +331,11 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             int result = bll.ResetPassword(Id, userNumber + "123456");
             if (result > 0)
             {
-                return Content("修改成功！");
+                return Content("重置密码成功！");
             }
             else
             {
-                return Content("修改失败！");
+                return Content("重置密码失败！");
             }
         }
 
@@ -309,7 +352,28 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             int result = bll.Edit(model);
             if (result > 0)
             {
-                return Content("ok");
+                return Content("修改成功");
+            }
+            else
+            {
+                return Content("修改失败");
+            }
+        }
+
+        public ActionResult EditTeacher(Students student)
+        {
+            Students model = new Students();
+            model.ID = student.ID;
+            model.UserNum = student.UserNum;
+            model.UserName = student.UserName;
+            model.Sex = student.Sex;
+            model.Age = student.Age;
+            model.Position = student.Position;
+            model.Department = student.Department;
+            int result = bll.Edit(model);
+            if (result > 0)
+            {
+                return Content("修改成功");
             }
             else
             {
@@ -355,6 +419,54 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             {
                 return Content("添加失败");
             }
+        }
+        public ActionResult AddTeacher(Students student)
+        {
+            #region 数据验证
+            if (string.IsNullOrEmpty(student.UserNum))
+            {
+                return Content("请输入学生编号！");
+            }
+            if (string.IsNullOrEmpty(student.UserName))
+            {
+                return Content("请输入学生姓名！");
+            }
+            if (string.IsNullOrEmpty(student.Department))
+            {
+                return Content("请选择学生院系！");
+            }
+            #endregion
+        
+            #region 判断该教师是否存在（根据工号）
+            bool isExist = bll.GetModel(student.UserNum);
+            if (isExist)
+            {
+                return Content("该教师已存在！");
+            }
+            #endregion       
+
+            #region 添加
+            Students model = new Students();
+            model.UserNum = student.UserNum;
+            model.UserName = student.UserName;
+            model.Sex = student.Sex;
+            model.User_Category = 1;
+            model.TeacherName = string.Empty;
+            model.Department = student.Department;
+            model.state = 0;
+            model.Position = student.Position;
+            model.Age = student.Age;
+            int result = bll.Add(model);
+            if (result > 0)
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+            #endregion
+
         }
 
         public ActionResult GetModel(int id)

@@ -31,7 +31,10 @@ namespace ZK.SchoolManagerPro.Bll
        {
            return dal.GetModel(Id);
        }
-
+       public bool GetModel(string userNum)
+       {
+           return dal.GetModel(userNum);
+       }
        public int Edit(Students model)
        {
            return dal.Edit(model);
