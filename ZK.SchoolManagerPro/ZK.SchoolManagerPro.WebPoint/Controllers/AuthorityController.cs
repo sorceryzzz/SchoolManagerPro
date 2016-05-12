@@ -15,6 +15,126 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
 
         UserRoleBll userRoleBll = new UserRoleBll();
         BLL.t_authority authorityBll = new BLL.t_authority();
+        BLL.t_role roleBll = new BLL.t_role();
+
+
+        /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RoleList(int? pageIndex)
+        {
+            if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
+            ViewBag.RedirectTo = "/Authority/RoleList/";
+            ViewBag.PageIndex = pageIndex;
+            ViewBag.PageSize = 5;
+
+
+            var count = roleBll.GetCount();//总条数
+
+            ViewBag.Name = string.Empty;
+            ViewBag.number = string.Empty;
+            ViewBag.Department = string.Empty;
+            ViewBag.TotalCount = count;
+            DataTable dt = roleBll.GetRoleList(pageIndex.Value, 5);
+
+            return View(dt);
+        }
+
+        /// <summary>
+        /// 添加权限
+        /// </summary>
+        /// <returns></returns>
+        public ContentResult AddRoleInfo()
+        {
+            var r_name = Request["r_name"];
+
+            var t_creater = "00000000000";
+
+            if (string.IsNullOrEmpty(r_name))
+            {
+                return Content("请输入角色名称！");
+            }
+
+            Model.t_role tModel = new Model.t_role();
+            tModel.R_Name = r_name;
+            tModel.R_Creater = t_creater;
+            tModel.R_CreateTime = DateTime.Now;
+            tModel.R_UpdateTime = DateTime.Now;
+            //add
+            int rltInt = roleBll.Add(tModel);
+
+            if (rltInt > -1)
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+        }
+        /// <summary>
+        /// 删除权限
+        /// </summary>
+        /// <returns></returns>
+        public ContentResult DeleteRoleInfo(int ah_id)
+        {
+            int result = roleBll.Delete(ah_id);
+            if (result > 0)
+            {
+                return Content("删除成功！");
+            }
+            else
+            {
+                return Content("删除失败！");
+            }
+        }
+        /// <summary>
+        /// 获取角色信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetRoleModel(int? id)
+        {
+            var model = roleBll.GetModel(id);
+            string jsonModel = JsonConvert.SerializeObject(model);
+            return Content(jsonModel);
+        }
+        /// <summary>
+        /// 修改角色
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditRoleInfo(int? id)
+        {
+            var r_name = Request["r_name"];
+
+            var t_creater = "00000000000";
+
+            if (string.IsNullOrEmpty(r_name))
+            {
+                return Content("请输入角色名称！");
+            }
+
+            Model.t_role tModel = new Model.t_role();
+            tModel.R_ID = id.Value;
+            tModel.R_Name = r_name;
+            tModel.R_Creater = t_creater;
+            tModel.R_UpdateTime = DateTime.Now;
+            //add
+            int rltInt = roleBll.Update(tModel);
+
+            if (rltInt > -1)
+            {
+                return Content("修改成功");
+            }
+            else
+            {
+                return Content("修改失败");
+            }
+        }
+
+
         /// <summary>
         /// 获取权限列表
         /// </summary>

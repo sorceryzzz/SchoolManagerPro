@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -13,11 +14,25 @@ namespace ZK.SchoolManagerPro.BLL
         private readonly ZK.SchoolManagerPro.DAL.t_role dal = new ZK.SchoolManagerPro.DAL.t_role();
 
         /// <summary>
+        /// 获取角色列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataTable GetRoleList(int pageIndex, int pageSize)
+        {
+            return dal.GetRoleList(pageIndex, pageSize, "1=1", "r_createTime").Tables[0];
+        }
+
+        /// <summary>
         /// 增加一条数据
         /// </summary>
-        public void Add(ZK.SchoolManagerPro.Model.t_role model)
+        public int Add(ZK.SchoolManagerPro.Model.t_role model)
         {
-            dal.Add(model);
+          return  dal.Add(model);
         }
 
         /// <summary>
@@ -36,6 +51,14 @@ namespace ZK.SchoolManagerPro.BLL
         {
             int count = dal.Delete(r_id);
             return count;
+        }
+        /// <summary>
+        /// 获取总条数
+        /// </summary>
+        /// <returns></returns>
+        public int GetCount()
+        {
+            return dal.GetCount();
         }
 
         /// <summary>
@@ -56,13 +79,5 @@ namespace ZK.SchoolManagerPro.BLL
             return model;
         }
 
-        /// <summary>
-        /// 获得泛型数据列表
-        /// </summary>
-        public List<ZK.SchoolManagerPro.Model.t_role> GetList()
-        {
-            List<ZK.SchoolManagerPro.Model.t_role> lst = dal.GetList();
-            return lst;
-        }
     }
 }
