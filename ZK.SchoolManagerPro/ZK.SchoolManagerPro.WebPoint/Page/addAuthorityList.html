@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <base target="_self">
+    <title>新增学生</title>
+    <!-- HTTP 1.1 -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <!-- HTTP 1.0 -->
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!-- Prevents caching at the Proxy Server -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="generator" content="" />
+    <!-- leave this for stats please
+    <link rel="shortcut icon" href="/cbexpre/favicon.ico" type="image/x-icon"/> -->
+    <link href="../styles/css.css" rel="stylesheet" />
+    <link href="../styles/css.css" rel="stylesheet" />
+    <link href="../styles/pub.css" rel="stylesheet" />
+    <!--<link href="../static/styles/jquery/extend/fixedheadertable.css" rel="stylesheet" />-->
+    <script type="text/javascript">
+        var ctx_ = '/cbexpre';
+        var sfix_ = '.do';
+    </script>
+    <script type="text/javascript" src="../static/scripts/jquery/jquery-1.7.2.min.js"></script>
+
+    <!--<script type="text/javascript" src="../static/scripts/jquery/validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery/validate/jquery.validate.override.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery/validate/messages_zh.js"></script>
+    <script type="text/javascript" src="../static/scripts/jquery/extend/jquery.fixedheadertable.min.js"></script>
+
+    <script type="text/javascript" src="../static/scripts/date/WdatePicker.js"></script>
+    <script type="text/javascript" src="../static/scripts/app/message/app-message_zh_CN.js"></script>
+
+               <script src="../static/scripts/added.js"></script>
+        -->
+    <script type="text/javascript" src="../static/scripts/app/app-js.min.js"></script>
+
+
+    <script type="text/javascript">
+        function closeWindow() {
+            top.window.location.href = top.window.location.href;
+        }
+
+        $(function () {
+
+
+            //保存
+            $("#btnSave").click(function () {
+
+
+                var ah_name = $("#ah_name").val();
+                var ah_controller_url = $("#ah_controller_url").val();
+                var ah_action_url = $("#ah_action_url").val();
+                
+                if (ah_name == "") {
+                    $("#ah_nameSpan").text("请输入权限名称！");
+                    return false;
+                }
+                else {
+                    $("#ah_nameSpan").text("");
+                }
+                if (ah_controller_url == "") {
+                    $("#ah_controller_urlSpan").text("请输入控制器URL！");
+                    return;
+                }
+                else {
+                    $("#ah_controller_urlSpan").text("");
+                }
+            
+                if (ah_action_url == "") {
+                    $("#ah_action_urlSpan").text("请选择ActionUrl");
+                    return;
+                } else {
+                    $("#ah_action_urlSpan").text("");
+                }
+
+                $.post("../Authority/AddAuthorityInfo", { ah_name: ah_name, ah_controller_url: ah_controller_url, ah_action_url: ah_action_url }, function (data) {
+                    alert(data);
+                    top.window.location.href = top.window.location.href;
+                    window.onbeforeunload();
+                });
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div align="left" style="width: 100%">
+        <form id="pubProject" name="pubProject" method="post">
+            <input type="hidden" id="userId" />
+            <input type="hidden" id="hdOperate" />
+            <!-- hidden -->
+            <div class="content_box">
+                <table align="center" cellpadding="3" cellspacing="0">
+                    <tr>
+                        <td class="title" align="center">权限信息</td>
+                    </tr>
+                </table>
+                <table align="center" cellpadding="3" cellspacing="0">
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
+                        <td width="80%" align="left" style="border-bottom-width: 0px">
+                            <input type="text" id="ah_name" name="ah_name" value="" size="25" maxlength="32" />
+                            <span id="ah_nameSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>控制器URL:</th>
+                        <td align="left" style="border-bottom-width: 0px">
+                            <input type="text" id="ah_controller_url" name="ah_controller_url" value="" size="25" maxlength="64" />
+                            <span id="ah_controller_urlSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>ActionURL:</th>
+                        <td align="left" style="border-bottom-width: 0px">
+                            <input type="text" id="ah_action_url" name="ah_action_url" value="" size="25" maxlength="64" />
+                            <span id="ah_action_urlSpan" style="color:#FF0000"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- button -->
+            <div class="botbox">
+                <!--<sec:authorize url="/biz/tx/pstr/101407">-->
+                <input type="button" value="保存" class="input" id="btnSave" />
+                <!--</sec:authorize>-->
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <sec:authorize url="/biz/tx/pstr/101400">
+                    <input type="button" value="取消" class="input" onclick="wcancel();">
+                </sec:authorize>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
+

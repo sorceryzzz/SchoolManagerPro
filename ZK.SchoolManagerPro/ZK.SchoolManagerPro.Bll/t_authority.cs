@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -12,14 +13,28 @@ namespace ZK.SchoolManagerPro.BLL
     {
         private readonly ZK.SchoolManagerPro.DAL. t_authority dal = new ZK.SchoolManagerPro.DAL.t_authority();
 
+        /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataTable GetAuthorityList(int pageIndex, int pageSize)
+        {
+            return dal.GetAuthorityList(pageIndex, pageSize, "1=1", "ah_createtime").Tables[0];
+        }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public void Add(ZK.SchoolManagerPro.Model.t_authority model)
+        public int Add(ZK.SchoolManagerPro.Model.t_authority model)
         {
-            dal.Add(model);
+           return  dal.Add(model);
         }
+        
 
         /// <summary>
         /// 更新一条数据
@@ -67,6 +82,14 @@ namespace ZK.SchoolManagerPro.BLL
         {
             List<ZK.SchoolManagerPro.Model.t_authority> lst = dal.GetList();
             return lst;
+        }
+        /// <summary>
+        /// 获取总条数
+        /// </summary>
+        /// <returns></returns>
+        public int GetCount()
+        {
+            return dal.GetCount();
         }
     }
 }

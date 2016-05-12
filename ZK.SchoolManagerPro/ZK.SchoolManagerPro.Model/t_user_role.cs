@@ -42,7 +42,7 @@ namespace ZK.SchoolManagerPro.Model
         /// <summary>
         ///更新时间
         /// </summary>
-        public DateTime T_UpdateTime { set { t_updateTime = value; } get { return t_updateTime; }
+        public DateTime T_UpdateTime { set { t_updateTime = value; } get { return t_updateTime; } }
 
         #endregion
 

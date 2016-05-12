@@ -326,6 +326,7 @@
     <Content Include="images\window\X.png" />
     <Content Include="menu\left_all.html" />
     <Content Include="Page\Studentadd.html" />
+    <Content Include="Page\AuthorityEdit.html" />
     <Content Include="Page\studentEdit.html" />
     <Content Include="Page\UploadStudents.html" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
@@ -576,6 +577,8 @@
     <Content Include="static\styles\jquery\easyui\default\images\Thumbs.db" />
     <Content Include="static\timeout.jsp" />
     <Content Include="Views\Students\IndexTeacher.cshtml" />
+    <Content Include="Views\Authority\AuthorityList.cshtml" />
+    <Content Include="Page\addAuthorityList.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
