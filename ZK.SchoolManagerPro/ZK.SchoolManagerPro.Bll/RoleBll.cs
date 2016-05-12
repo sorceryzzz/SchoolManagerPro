@@ -9,7 +9,7 @@ namespace ZK.SchoolManagerPro.BLL
     /// <summary>
     /// 业务逻辑类 t_role
     /// </summary>
-    public class t_role
+    public class RoleBll
     {
         private readonly ZK.SchoolManagerPro.DAL.t_role dal = new ZK.SchoolManagerPro.DAL.t_role();
 

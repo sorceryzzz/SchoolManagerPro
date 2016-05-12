@@ -9,7 +9,7 @@ namespace ZK.SchoolManagerPro.BLL
     /// <summary>
     /// 业务逻辑类 t_authority
     /// </summary>
-    public class t_authority
+    public class AuthorityBll
     {
         private readonly ZK.SchoolManagerPro.DAL. t_authority dal = new ZK.SchoolManagerPro.DAL.t_authority();
 

@@ -8,7 +8,7 @@ namespace ZK.SchoolManagerPro.BLL
     /// <summary>
     /// 业务逻辑类 t_role_authority
     /// </summary>
-    public class t_role_authority
+    public class Role_AuthorityBll
     {
         private readonly ZK.SchoolManagerPro.DAL.t_role_authority dal = new ZK.SchoolManagerPro.DAL.t_role_authority();
 

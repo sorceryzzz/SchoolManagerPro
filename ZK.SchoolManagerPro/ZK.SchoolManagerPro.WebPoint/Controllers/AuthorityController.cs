@@ -14,8 +14,8 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
     {
 
         UserRoleBll userRoleBll = new UserRoleBll();
-        BLL.t_authority authorityBll = new BLL.t_authority();
-        BLL.t_role roleBll = new BLL.t_role();
+        BLL.AuthorityBll authorityBll = new BLL.AuthorityBll();
+        BLL.RoleBll roleBll = new BLL.RoleBll();
 
 
         /// <summary>
