@@ -26,7 +26,19 @@ namespace ZK.SchoolManagerPro.BLL
         {
             return dal.GetRoleList(pageIndex, pageSize, "1=1", "r_createTime").Tables[0];
         }
-
+        /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataTable GetRoleList()
+        {
+            return dal.GetRoleList().Tables[0];
+        }
         /// <summary>
         /// 增加一条数据
         /// </summary>

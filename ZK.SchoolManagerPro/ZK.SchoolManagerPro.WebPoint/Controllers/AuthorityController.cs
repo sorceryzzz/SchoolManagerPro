@@ -16,8 +16,176 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
         UserRoleBll userRoleBll = new UserRoleBll();
         BLL.AuthorityBll authorityBll = new BLL.AuthorityBll();
         BLL.RoleBll roleBll = new BLL.RoleBll();
+        Role_AuthorityBll roleAuthorityBll = new Role_AuthorityBll();
 
 
+        #region - 角色和权限 -
+        
+        /// <summary>
+        /// 添加角色和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddRoleAuthorityList()
+        {
+           var roleList= roleBll.GetRoleList();
+
+            var authorityList = authorityBll.GetAuthorityList();
+
+            ViewBag.RoleList = roleList;
+
+            ViewBag.AuthorityList = authorityList;
+
+            return View();
+        }
+        /// <summary>
+        /// 添加角色和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EditRoleAuthorityList()
+        {
+            var  id = Request["id"];
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return Content("输入参数有误!");
+            }
+
+            //查询实体
+            var raModel=roleAuthorityBll.GetModel(int.Parse(id));
+
+
+            var roleList = roleBll.GetRoleList();
+            var authorityList = authorityBll.GetAuthorityList();
+            ViewBag.RaModel = raModel;
+            ViewBag.RoleList = roleList;
+            ViewBag.AuthorityList = authorityList;
+
+            return View();
+        }
+        /// <summary>
+        /// 修改角色
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult EditRoleAuthorityInfo(int? id)
+        {
+            var roleId = Request["roleId"];
+            var authorityId = Request["authorityId"];
+            var roleName = Request["roleName"];
+            var authorityName = Request["authorityName"];
+
+            var t_creater = "00000000000";
+
+            if (string.IsNullOrEmpty(roleId) || string.IsNullOrEmpty(authorityId))
+            {
+                return Content("请输入角色名称！");
+            }
+
+            Model.t_role_authority tModel = new Model.t_role_authority();
+            tModel.T_Ra_ID =id.Value;
+            tModel.T_RoleID = int.Parse(roleId);
+            tModel.T_AuthorityID = int.Parse(authorityId);
+            tModel.T_RoleName = roleName;
+            tModel.T_AuthorityName = authorityName;
+
+            tModel.T_UpdateTime = DateTime.Now;
+
+            //update
+            int rltInt = roleAuthorityBll.Update(tModel);
+
+            if (rltInt > -1)
+            {
+                return Content("修改成功");
+            }
+            else
+            {
+                return Content("修改失败");
+            }
+        }
+
+
+
+
+
+        /// <summary>
+        /// 获取角色和权限关联列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RoleAuthorityList(int? pageIndex)
+        {
+            if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
+            ViewBag.RedirectTo = "/Authority/RoleAuthorityList/";
+            ViewBag.PageIndex = pageIndex;
+            ViewBag.PageSize = 5;
+
+
+            var count = roleAuthorityBll.GetCount();//总条数
+
+            ViewBag.Name = string.Empty;
+            ViewBag.number = string.Empty;
+            ViewBag.Department = string.Empty;
+            ViewBag.TotalCount = count;
+            DataTable dt = roleAuthorityBll.GetRoleAuthorityList(pageIndex.Value, 5);
+
+            return View(dt);
+        }
+        
+        /// <summary>
+        /// 添加权限
+        /// </summary>
+        /// <returns></returns>
+        public ContentResult AddRoleAuthorityInfo()
+        {
+            var roleId = Request["roleId"];
+            var authorityId = Request["authorityId"];
+            var roleName = Request["roleName"];
+            var authorityName = Request["authorityName"];
+
+            var t_creater = "00000000000";
+
+            if (string.IsNullOrEmpty(roleId) || string.IsNullOrEmpty(authorityId))
+            {
+                return Content("请输入角色名称！");
+            }
+
+            Model.t_role_authority tModel = new Model.t_role_authority();
+            tModel.T_RoleID = int.Parse(roleId);
+            tModel.T_AuthorityID = int.Parse(authorityId);
+            tModel.T_RoleName = roleName;
+            tModel.T_AuthorityName = authorityName;
+
+            tModel.T_Creater = t_creater;
+            tModel.T_CreateTime = DateTime.Now;
+            tModel.T_UpdateTime = DateTime.Now;
+            //add
+            int rltInt = roleAuthorityBll.Add(tModel);
+
+            if (rltInt > -1)
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+        }
+        /// <summary>
+        /// 删除权限
+        /// </summary>
+        /// <returns></returns>
+        public ContentResult DeleteRoleAuthorityInfo(int t_ra_id)
+        {
+            int result = roleAuthorityBll.Delete(t_ra_id);
+            if (result > 0)
+            {
+                return Content("删除成功！");
+            }
+            else
+            {
+                return Content("删除失败！");
+            }
+        }
+        #endregion
         /// <summary>
         /// 获取权限列表
         /// </summary>

@@ -224,5 +224,34 @@ namespace ZK.SchoolManagerPro.DAL
             }
             return ds;
         }
+
+        /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataSet GetRoleList()
+        {
+            string cmdText = string.Empty;
+            DataSet ds = null;
+            try
+            {
+                cmdText = string.Format("SELECT * FROM t_role ");
+                ds = DbHelperMySql.GetDataSet(DbHelperMySql.connectionStringManager, cmdText);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return ds;
+        }
+
+
+
+
     }
 }

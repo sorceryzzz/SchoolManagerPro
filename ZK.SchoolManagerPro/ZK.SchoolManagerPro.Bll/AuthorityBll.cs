@@ -28,6 +28,19 @@ namespace ZK.SchoolManagerPro.BLL
         }
 
         /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataTable GetAuthorityList()
+        {
+            return dal.GetAuthorityList().Tables[0];
+        }
+        /// <summary>
         /// 增加一条数据
         /// </summary>
         public int Add(ZK.SchoolManagerPro.Model.t_authority model)
