@@ -9,7 +9,7 @@ namespace ZK.SchoolManagerPro.BLL
     /// <summary>
     /// 业务逻辑类 t_authority
     /// </summary>
-    public class t_authority
+    public class AuthorityBll
     {
         private readonly ZK.SchoolManagerPro.DAL. t_authority dal = new ZK.SchoolManagerPro.DAL.t_authority();
 
@@ -27,6 +27,19 @@ namespace ZK.SchoolManagerPro.BLL
             return dal.GetAuthorityList(pageIndex, pageSize, "1=1", "ah_createtime").Tables[0];
         }
 
+        /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataTable GetAuthorityList()
+        {
+            return dal.GetAuthorityList().Tables[0];
+        }
         /// <summary>
         /// 增加一条数据
         /// </summary>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <base target="_self">
-    <title>新增权限</title>
+    <title>新增学生</title>
     <!-- HTTP 1.1 -->
     <meta http-equiv="Cache-Control" content="no-store" />
     <!-- HTTP 1.0 -->
@@ -41,7 +41,22 @@
             top.window.location.href = top.window.location.href;
         }
 
+        //初始化数据
+        function initData() {
+
+
+
+
+
+
+
+        }
         $(function () {
+
+            
+
+
+
 
 
             //保存
@@ -98,17 +113,24 @@
                 </table>
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>角色名称:</th>
                         <td width="80%" align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_name" name="ah_name" value="" size="25" maxlength="32" />
+                            <!--<input type="text" id="ah_name" name="ah_name" value="" size="25" maxlength="32" />-->
+                            <select id="roleList" >
+                                <option>老师</option>
+                                <option>学生</option>
+                            </select>
                             <span id="ah_nameSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>控制器URL:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
                         <td align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_controller_url" name="ah_controller_url" value="" size="25" maxlength="64" />
-                            <span id="ah_controller_urlSpan" style="color:#FF0000"></span>
+                            <select id="roleList">
+                                <option>老师</option>
+                                <option>学生</option>
+                            </select>
+                               <span id="ah_controller_urlSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                     <tr>

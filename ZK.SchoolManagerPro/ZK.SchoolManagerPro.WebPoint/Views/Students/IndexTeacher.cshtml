@@ -65,6 +65,9 @@
         }
     </style>
     <script type="text/javascript">
+
+
+       
         function Delete(id)
         {
             if (confirm("确定要删除该学生吗?")) {
@@ -142,6 +145,7 @@
                 </table>
             </div>
             <div class="botbox">
+             
                 <input name="sub1" type="submit" class="input" value="查询" />
                 <input name="sub3" type="button" class="input" value="重置" onclick="clearForm(this.form);" />
             </div>
@@ -181,15 +185,33 @@
                         <input type="button" value="删除" onclick="Delete(@row["user_Id"]);" />
                         &nbsp;
                         <input type="button" value="密码重置" onclick="Reset(@row["user_Id"],@row["user_num"])" />
+                        <input name="sub1" type="button" class="input" userId='@row["user_Id"]' id="contract_authorityID" value="关联权限" />
+                        <input name="sub1" type="button" class="input" id="" value="关联角色" />
                     </td>
                     
                 </tr>
             }
         </table>
+
     </div>
     <div class="pagenum">
         @Html.ShowTeaPageNavigate((int)(ViewBag.PageIndex), (int)(ViewBag.PageSize), (int)(ViewBag.TotalCount), (string)ViewBag.RedirectTo, (string)ViewBag.Name, (string)ViewBag.number, (string)ViewBag.Department)
     </div>
+
+    <script type="text/javascript">
+        //入口
+        $(function () {
+
+            $("#contract_authorityID").click(function () {
+                //用户ID
+                var userid = $(this).attr("userId");
+                
+
+                doAction('../Authority/AddUserAuthorityList?userId='+ userid, 40, 30);
+
+            });
+        })
+    </script>
 </body>
 
 </html>

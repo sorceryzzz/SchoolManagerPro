@@ -200,13 +200,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Common\PageHelper.cs" />
-    <Compile Include="Common\UserHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
-    <Compile Include="Filters\UserFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -326,8 +324,8 @@
     <Content Include="images\wallpapers\3in.jpg" />
     <Content Include="images\window\a1.jpg" />
     <Content Include="images\window\X.png" />
-    <Content Include="images\zhuce.jpg" />
     <Content Include="menu\left_all.html" />
+    <Content Include="Page\addRoleAuthorityList.html" />
     <Content Include="Page\addRoleList.html" />
     <Content Include="Page\roleEdit.html" />
     <Content Include="Page\Studentadd.html" />
@@ -529,9 +527,7 @@
     <Content Include="styles\index.css" />
     <Content Include="styles\pub.css" />
     <Content Include="styles\top.css" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -539,9 +535,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -589,10 +583,12 @@
     <Content Include="Views\Authority\AuthorityList.cshtml" />
     <Content Include="Page\addAuthorityList.html" />
     <Content Include="Views\Authority\RoleList.cshtml" />
-    <Content Include="Views\Students\Login.cshtml" />
-    <Content Include="Views\Students\Register.cshtml" />
-    <Content Include="Views\Home\Meau.cshtml" />
-    <Content Include="Views\Shared\master.cshtml" />
+    <Content Include="Views\Authority\RoleAuthorityList.cshtml" />
+    <Content Include="Views\Authority\AddRoleAuthorityList.cshtml" />
+    <Content Include="Views\Authority\EditRoleAuthorityList.cshtml" />
+    <Content Include="Views\Authority\UserAuthorityList.cshtml" />
+    <Content Include="Views\Authority\AddUserAuthorityList.cshtml" />
+    <Content Include="Views\Authority\EditUserAuthorityList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

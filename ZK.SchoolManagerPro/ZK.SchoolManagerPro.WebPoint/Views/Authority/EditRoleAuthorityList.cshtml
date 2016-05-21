@@ -1,8 +1,13 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <base target="_self">
-    <title>新增权限</title>
+    <title>新增学生</title>
     <!-- HTTP 1.1 -->
     <meta http-equiv="Cache-Control" content="no-store" />
     <!-- HTTP 1.0 -->
@@ -44,37 +49,37 @@
         $(function () {
 
 
+
+
+
+
+
             //保存
             $("#btnSave").click(function () {
 
+                var id = $("#raIdHideen").val();
 
-                var ah_name = $("#ah_name").val();
-                var ah_controller_url = $("#ah_controller_url").val();
-                var ah_action_url = $("#ah_action_url").val();
-                
-                if (ah_name == "") {
-                    $("#ah_nameSpan").text("请输入权限名称！");
+                var roleId = $("#roleList").val();
+                var roleName = $("#roleList").find("option:selected").text();
+                var authorityId = $("#roleList").val();
+                var authorityName = $("#AuthorityList").find("option:selected").text();
+
+                if (roleId == "" || roleId=="-1"|| roleName=="") {
+                    $("#ah_nameSpan").text("请选择角色！");
                     return false;
                 }
                 else {
                     $("#ah_nameSpan").text("");
                 }
-                if (ah_controller_url == "") {
-                    $("#ah_controller_urlSpan").text("请输入控制器URL！");
+                if (authorityId == "" || authorityId == "-1" || authorityName == "") {
+                    $("#ah_controller_urlSpan").text("请选择权限！");
                     return;
                 }
                 else {
                     $("#ah_controller_urlSpan").text("");
                 }
-            
-                if (ah_action_url == "") {
-                    $("#ah_action_urlSpan").text("请选择ActionUrl");
-                    return;
-                } else {
-                    $("#ah_action_urlSpan").text("");
-                }
 
-                $.post("../Authority/AddAuthorityInfo", { ah_name: ah_name, ah_controller_url: ah_controller_url, ah_action_url: ah_action_url }, function (data) {
+                $.post("../Authority/EditRoleAuthorityInfo", {id:id, roleId: roleId, roleName: roleName, authorityName: authorityName, authorityId: authorityId }, function (data) {
                     alert(data);
                     top.window.location.href = top.window.location.href;
                     window.onbeforeunload();
@@ -98,24 +103,46 @@
                 </table>
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>角色名称:</th>
                         <td width="80%" align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_name" name="ah_name" value="" size="25" maxlength="32" />
+                            <!--<input type="text" id="ah_name" name="ah_name" value="" size="25" maxlength="32" />-->
+                            <select id="roleList">
+
+                                <option value="-1">请选择</option>
+                                @foreach (System.Data.DataRow row in ViewBag.RoleList.Rows)
+                                {
+                                    if ((int)row["r_id"] == (int)ViewBag.RaModel.T_RoleID)
+                                    {
+                                        <option value='@row["r_id"].ToString()' selected="selected" > @row["r_name"].ToString()</option>
+                                    }
+                                    else
+                                    {
+                                        <option value='@row["r_id"].ToString()'> @row["r_name"].ToString()</option>
+                                    }
+                                }
+                           
+                            </select>
                             <span id="ah_nameSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>控制器URL:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
                         <td align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_controller_url" name="ah_controller_url" value="" size="25" maxlength="64" />
+                            <select id="AuthorityList">
+                                <option>请选择</option>
+                                @foreach (System.Data.DataRow row in ViewBag.AuthorityList.Rows)
+                                {
+                                    if ((int)row["ah_id"] == (int)ViewBag.RaModel.T_AuthorityID)
+                                    {
+                                        <option value='@row["ah_id"].ToString()' selected="selected"> @row["ah_name"].ToString()</option>
+                                    }
+                                    else
+                                    {
+                                        <option value='@row["ah_id"].ToString()'> @row["ah_name"].ToString()</option>
+                                    }
+                                }
+                            </select>
                             <span id="ah_controller_urlSpan" style="color:#FF0000"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>ActionURL:</th>
-                        <td align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_action_url" name="ah_action_url" value="" size="25" maxlength="64" />
-                            <span id="ah_action_urlSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                 </table>
@@ -133,7 +160,7 @@
             </div>
         </form>
     </div>
-
+    <input type="hidden" name="name" id="raIdHideen" value="@ViewBag.RaModel.T_Ra_ID" />
 </body>
 </html>
 

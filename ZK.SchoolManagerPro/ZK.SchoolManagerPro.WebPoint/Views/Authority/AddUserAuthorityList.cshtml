@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <base target="_self">
-    <title>新增权限</title>
+    <title>新增用户权限</title>
     <!-- HTTP 1.1 -->
     <meta http-equiv="Cache-Control" content="no-store" />
     <!-- HTTP 1.0 -->
@@ -48,33 +48,21 @@
             $("#btnSave").click(function () {
 
 
-                var ah_name = $("#ah_name").val();
-                var ah_controller_url = $("#ah_controller_url").val();
-                var ah_action_url = $("#ah_action_url").val();
-                
-                if (ah_name == "") {
-                    $("#ah_nameSpan").text("请输入权限名称！");
+                var urname = $("#ur_name").val();
+                var userid = $("#ur_name").attr("userid");
+
+                var authorityId = $("#AuthorityList").val();
+                var authorityName = $("#AuthorityList").find("option:selected").text();
+
+                if (ur_name == "") {
+                    $("#ur_nameSpan").text("请输入用户名称！");
                     return false;
                 }
                 else {
-                    $("#ah_nameSpan").text("");
-                }
-                if (ah_controller_url == "") {
-                    $("#ah_controller_urlSpan").text("请输入控制器URL！");
-                    return;
-                }
-                else {
-                    $("#ah_controller_urlSpan").text("");
-                }
-            
-                if (ah_action_url == "") {
-                    $("#ah_action_urlSpan").text("请选择ActionUrl");
-                    return;
-                } else {
-                    $("#ah_action_urlSpan").text("");
+                    $("#ur_nameSpan").text("");
                 }
 
-                $.post("../Authority/AddAuthorityInfo", { ah_name: ah_name, ah_controller_url: ah_controller_url, ah_action_url: ah_action_url }, function (data) {
+                $.post("../Authority/AddUserAuthorityListForm", { urname: urname, userid: userid, authorityId: authorityId, authorityName: authorityName }, function (data) {
                     alert(data);
                     top.window.location.href = top.window.location.href;
                     window.onbeforeunload();
@@ -93,29 +81,28 @@
             <div class="content_box">
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
-                        <td class="title" align="center">权限信息</td>
+                        <td class="title" align="center">用户权限信息</td>
                     </tr>
                 </table>
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>用户名称:</th>
                         <td width="80%" align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_name" name="ah_name" value="" size="25" maxlength="32" />
-                            <span id="ah_nameSpan" style="color:#FF0000"></span>
+                            <input type="text" id="ur_name"  size="25" maxlength="32" userid="@ViewBag.UaModel.ID"  value="@ViewBag.UaModel.UserName"/>
+                            <span id="ur_nameSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>控制器URL:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
                         <td align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_controller_url" name="ah_controller_url" value="" size="25" maxlength="64" />
-                            <span id="ah_controller_urlSpan" style="color:#FF0000"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>ActionURL:</th>
-                        <td align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ah_action_url" name="ah_action_url" value="" size="25" maxlength="64" />
-                            <span id="ah_action_urlSpan" style="color:#FF0000"></span>
+                            <select id="AuthorityList">
+                                <option>请选择</option>
+                                @foreach (System.Data.DataRow row in ViewBag.AuthorityList.Rows)
+                                {
+                                    <option value=" @row["ah_id"].ToString() "> @row["ah_name"].ToString()</option>
+                                }
+                            </select>
+
                         </td>
                     </tr>
                 </table>

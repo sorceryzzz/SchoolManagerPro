@@ -9,7 +9,7 @@ namespace ZK.SchoolManagerPro.BLL
     /// <summary>
     /// 业务逻辑类 t_role
     /// </summary>
-    public class t_role
+    public class RoleBll
     {
         private readonly ZK.SchoolManagerPro.DAL.t_role dal = new ZK.SchoolManagerPro.DAL.t_role();
 
@@ -26,7 +26,19 @@ namespace ZK.SchoolManagerPro.BLL
         {
             return dal.GetRoleList(pageIndex, pageSize, "1=1", "r_createTime").Tables[0];
         }
-
+        /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataTable GetRoleList()
+        {
+            return dal.GetRoleList().Tables[0];
+        }
         /// <summary>
         /// 增加一条数据
         /// </summary>
