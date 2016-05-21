@@ -112,7 +112,7 @@ namespace ZK.SchoolManagerPro.DAL
                                     new MySqlParameter("@t_ra_id",model.T_Ra_ID),
                                     new MySqlParameter("@t_roleid",model.T_RoleID),
                                     new MySqlParameter("@t_rolename",model.T_RoleName),
-                                          new MySqlParameter("@t_authorityid",model.T_AuthorityID),
+                                    new MySqlParameter("@t_authorityid",model.T_AuthorityID),
                                     new MySqlParameter("@t_authorityname",model.T_AuthorityName),
                                     new MySqlParameter("@t_updatetime",model.T_UpdateTime)
                                    };
@@ -246,6 +246,7 @@ namespace ZK.SchoolManagerPro.DAL
         {
             string cmdText = string.Format("SELECT COUNT(*)  FROM t_role_authority");
             return Convert.ToInt32(DbHelperMySql.ExecuteScalar(DbHelperMySql.connectionStringManager, CommandType.Text, cmdText));
+
         }
 
         /// <summary>

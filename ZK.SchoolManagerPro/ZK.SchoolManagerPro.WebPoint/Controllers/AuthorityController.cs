@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ZK.SchoolManagerPro.Bll;
 using ZK.SchoolManagerPro.BLL;
 using ZK.SchoolManagerPro.Model;
 
@@ -17,14 +18,181 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
         BLL.AuthorityBll authorityBll = new BLL.AuthorityBll();
         BLL.RoleBll roleBll = new BLL.RoleBll();
         Role_AuthorityBll roleAuthorityBll = new Role_AuthorityBll();
+        User_AuthorityBll userAuthorityBll = new User_AuthorityBll();
+        StudentBll studentBll = new StudentBll();
 
 
-        #region - 角色和权限 -
-        
+        #region - 用户和角色 -
+        /// <summary>
+        /// 获取用户和权限关联列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UserAuthorityList(int? pageIndex)
+        {
+            if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
+            ViewBag.RedirectTo = "/Authority/UserAuthorityList/";
+            ViewBag.PageIndex = pageIndex;
+            ViewBag.PageSize = 5;
+
+
+            var count = userAuthorityBll.GetCount();//总条数
+
+            ViewBag.Name = string.Empty;
+            ViewBag.number = string.Empty;
+            ViewBag.Department = string.Empty;
+            ViewBag.TotalCount = count;
+            DataTable dt = userAuthorityBll.GetUserAuthorityList(pageIndex.Value, 5);
+
+            return View(dt);
+        }
+        /// <summary>
+        /// 添加用户和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddUserAuthorityList()
+        {
+            //var roleList = roleBll.GetRoleList();
+            var  userId= Request["userId"];
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Content("用户ID不能为空");
+            }
+
+            var userModel= studentBll.GetModel(int.Parse(userId));
+            var authorityList = authorityBll.GetAuthorityList();
+
+
+            //ViewBag.RoleList = roleList;
+            ViewBag.UserModel = userModel;
+            ViewBag.AuthorityList = authorityList;
+
+            return View();
+        }
+        /// <summary>
+        /// 添加用户和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddUserAuthorityListForm()
+        {
+            var userid = Request["userid"];
+            var authorityId = Request["authorityId"];
+            var urname = Request["urname"];
+            var authorityName = Request["authorityName"];
+
+            var t_creater = "00000000000";
+
+            if (string.IsNullOrEmpty(userid) || string.IsNullOrEmpty(authorityId))
+            {
+                return Content("请输入用户与权限！");
+            }
+            Model.t_user_authority tuaModel = new t_user_authority();
+
+            tuaModel.T_UserID =int.Parse( userid);
+            tuaModel.T_UserName = urname;
+            tuaModel.T_AuthorityID = int.Parse(authorityId);
+            tuaModel.T_AuthorityName = authorityName;
+            tuaModel.T_Creater = t_creater;
+            tuaModel.T_CreateTime = DateTime.Now;
+            tuaModel.T_UpdateTime = DateTime.Now;
+
+            int rltInt = userAuthorityBll.Add(tuaModel);
+
+            if (rltInt > -1)
+            {
+                return Content("添加成功");
+            }
+            else
+            {
+                return Content("添加失败");
+            }
+        }
+
+        /// <summary>
+        /// 删除用户与权限
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteUserAuthorityInfo(int? t_uaid)
+        {
+            int result = userAuthorityBll.Delete(t_uaid);
+            if (result > 0)
+            {
+                return Content("删除成功！");
+            }
+            else
+            {
+                return Content("删除失败！");
+            }
+
+        }
         /// <summary>
         /// 添加角色和权限关联
         /// </summary>
         /// <returns></returns>
+        public ActionResult EditUserAuthorityList()
+        {
+            var id = Request["id"];
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return Content("输入参数有误!");
+            }
+
+            //查询实体
+            var uaModel = userAuthorityBll.GetModel(int.Parse(id));
+
+            var authorityList = authorityBll.GetAuthorityList();
+            ViewBag.UaModel = uaModel;
+            ViewData.Model = authorityList;
+            //ViewBag.AuthorityList = authorityList;
+
+            return View();
+        }    
+        /// <summary>  
+        /// 添加角色和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EditUserAuthorityListForm()
+        {
+            var tuid = Request["tuid"];
+            var userid = Request["userid"];
+            var authorityId = Request["authorityId"];
+            var urname = Request["urname"];
+            var authorityName = Request["authorityName"];
+
+
+            if (string.IsNullOrEmpty(userid) || string.IsNullOrEmpty(authorityId))
+            {
+                return Content("请输入用户与权限！");
+            }
+            Model.t_user_authority tuaModel = new t_user_authority();
+            tuaModel.T_UaID = int.Parse(tuid);
+            tuaModel.T_UserID = int.Parse(userid);
+            tuaModel.T_UserName = urname;
+            tuaModel.T_AuthorityID = int.Parse(authorityId);
+            tuaModel.T_AuthorityName = authorityName;
+            tuaModel.T_UpdateTime = DateTime.Now;
+
+
+            int rltInt = userAuthorityBll.Update(tuaModel);
+
+            if (rltInt > -1)
+            {
+                return Content("修改成功");
+            }
+            else
+            {
+                return Content("修改失败");
+            }
+        }
+        #endregion
+
+            #region - 角色和权限 -
+
+            /// <summary>
+            /// 添加角色和权限关联
+            /// </summary>
+            /// <returns></returns>
         public ActionResult AddRoleAuthorityList()
         {
            var roleList= roleBll.GetRoleList();
@@ -186,6 +354,10 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             }
         }
         #endregion
+
+
+        #region - 权限 -
+
         /// <summary>
         /// 获取权限列表
         /// </summary>
@@ -257,6 +429,10 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                 return Content("删除失败！");
             }
         }
+        #endregion
+
+
+        #region - 角色 -
         /// <summary>
         /// 获取角色信息
         /// </summary>
@@ -302,6 +478,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             }
         }
 
+        #endregion
 
         /// <summary>
         /// 获取权限列表
@@ -500,7 +677,5 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
 
             return Content(rltBool > 0 ? "true" : "false");
         }
-
-
     }
 }

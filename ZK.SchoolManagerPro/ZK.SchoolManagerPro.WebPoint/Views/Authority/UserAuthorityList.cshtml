@@ -1,0 +1,129 @@
+﻿@using ZK.SchoolManagerPro.WebPoint.Common;
+@model System.Data.DataTable
+@{
+    ViewBag.Title = "用户权限管理";
+    Layout = null;
+    @Styles.Render("~/Content/css")
+}
+<html>
+<head>
+    <!-- HTTP 1.1 -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <!-- HTTP 1.0 -->
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!-- Prevents caching at the Proxy Server -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="generator" content="" />
+    <!-- leave this for stats please
+    <link rel="shortcut icon" href="/cbexpre/favicon.ico" type="image/x-icon"/> -->
+
+    <title>用户权限管理</title>
+    <!-- HTTP 1.1 -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <!-- HTTP 1.0 -->
+    <meta http-equiv="Pragma" content="no-cache" />
+    <!-- Prevents caching at the Proxy Server -->
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="generator" content="" />
+    <!-- leave this for stats please
+    <link rel="shortcut icon" href="/cbexpre/favicon.ico" type="image/x-icon"/> -->
+    <link href="~/styles/css.css" rel="stylesheet" />
+    <link href="~/styles/pub.css" rel="stylesheet" />
+    <link href="~/static/styles/jquery/extend/fixedheadertable.css" rel="stylesheet" />
+
+
+    <script type="text/javascript">
+        var ctx_ = '/cbexpre';
+        var sfix_ = '.do';
+    </script>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+    <script type="text/javascript" src="~/static/scripts/jquery/validate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/static/scripts/jquery/validate/jquery.validate.override.js"></script>
+    <script type="text/javascript" src="~/static/scripts/jquery/validate/messages_zh.js"></script>
+    <script type="text/javascript" src="~/static/scripts/jquery/extend/jquery.fixedheadertable.min.js"></script>
+
+    <script type="text/javascript" src="~/static/scripts/date/WdatePicker.js"></script>
+    <script type="text/javascript" src="~/static/scripts/app/message/app-message_zh_CN.js"></script>
+    <script type="text/javascript" src="~/static/scripts/app/app-js.min.js"></script>
+    <script src="~/static/scripts/added.js"></script>
+
+    <style type="text/css">
+        .botbox1 {
+            text-align: center;
+            margin: -2px auto;
+            border: #e8844c 0px solid;
+            border-top: none;
+            padding: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+
+
+        function Delete(id)
+        {
+            if (confirm("确定要删除该用户与权限的关联吗?")) {
+                AjaxSubmit(id);
+            }
+        }
+
+        function AjaxSubmit(t_uaid)
+        {
+            $.post("/Authority/DeleteUserAuthorityInfo", { t_uaid: t_uaid }, function (data) {
+                alert(data);
+                window.location.reload();
+            });
+        }
+    </script>
+
+</head>
+<body style="overflow-x: auto;">
+    <div class="currentposition">
+        <div>
+            用户权限管理-用户权限关联列表
+        </div>
+    </div>
+    @*<div class="listable">
+        <input type="button" value="关联角色权限" onclick="doAction('/Authority/AddRoleAuthorityList', 40, 30);">
+    </div>*@
+
+
+    <div class="listable" id="queryButton">
+        <table width="100%" border="0" cellpadding="3" cellspacing="0">
+            <tr>
+                <th width="10%">ID</th>
+                <th width="10%">用户名称</th>
+                <th width="10%">权限名称</th>
+                <th width="10%">创建人</th>
+                <th width="10%">创建时间</th>
+                <th width="10%">更新时间</th>
+                <th width="30%">操作</th>
+            </tr>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr align="center">
+                    <td>@row["t_uaid"].ToString()</td>
+                    <td>@row["t_username"].ToString()</td>
+                    <td>@(row["t_authorityname"].ToString())</td>
+                    <td>@row["t_creater"].ToString()</td>
+                    <td>@row["t_createtime"].ToString()</td>
+                    <td>@row["t_updatetime"].ToString()</td>
+                    <td>
+                        <input type="button" value="编辑" onclick="doAction('../Authority/EditUserAuthorityList?id=@row["t_uaid"]',40, 50);" />
+                        &nbsp;
+                        <input type="button" value="删除" onclick="Delete(@row["t_uaid"]);" />
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="pagenum">
+        @Html.ShowPageNavigate((int)(ViewBag.PageIndex), (int)(ViewBag.PageSize), (int)(ViewBag.TotalCount), (string)ViewBag.RedirectTo, (string)ViewBag.Name, (string)ViewBag.number, (string)ViewBag.Class, (string)ViewBag.Department)
+    </div>
+</body>
+
+</html>
