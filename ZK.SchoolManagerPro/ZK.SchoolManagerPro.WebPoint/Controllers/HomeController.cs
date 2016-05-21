@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ZK.SchoolManagerPro.Bll;
 using ZK.SchoolManagerPro.Model;
+using ZK.SchoolManagerPro.WebPoint.Filters;
 
 namespace ZK.SchoolManagerPro.WebPoint.Controllers
 {
@@ -13,7 +14,13 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
 
         UserBll urBll = new UserBll();
 
+        [UserFilter]
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Meau()
         {
             return View();
         }

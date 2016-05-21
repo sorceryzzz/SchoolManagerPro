@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title></title>
+    <script language="JavaScript">
+
+        function Request(strName) {
+            var strHref = window.document.location.href;
+            var intPos = strHref.indexOf("?");
+            var strRight = strHref.substr(intPos + 1);
+            var arrTmp = strRight.split("&");
+            for (var i = 0; i < arrTmp.length; i++) {
+                var arrTemp = arrTmp[i].split("=");
+                if (arrTemp[0].toUpperCase() == strName.toUpperCase()) return arrTemp[1];
+            }
+            return "";
+        }
+
+
+    </script>
+</head>
+
+<frameset rows="92,*" cols="*" frameborder="no" border="0" framespacing="0">
+    <frame src="views/top_all.html" name="topFrame" scrolling="No" style="border-bottom:#c60313 1px solid" noresize="noresize" id="topFrame" title="topFrame" />
+    <frameset id="menuSet" name="menuSet" rows="*" cols="16%,*" framespacing="0" frameborder="no" border="0">
+        <frame src="menu/left_all.html" name="leftFrame" scrolling="auto" noresize="noresize" id="leftFrame" style="border-right:#c60313 1px solid" title="leftFrame" />
+        <frame src="0-1-欢迎页面.html" scrolling="auto" name="mainFrame" id="mainFrame" title="mainFrame" />
+    </frameset>
+</frameset>
+<noframes>
+    <body>
+    </body>
+</noframes>
+
+
+
+</html>

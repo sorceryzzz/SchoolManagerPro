@@ -1,67 +1,98 @@
 ﻿@{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "注册会员";
     Layout = null;
 }
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>登录</title>
+    <title>注册</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
+        function onlyNum() {
+            if (!(event.keyCode == 46) && !(event.keyCode == 8) && !(event.keyCode == 37) && !(event.keyCode == 39))
+                if (!((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)))
+                    event.returnValue = false;
+        }
         function custInit() {
             //初始化焦点
             loginfrm.j_username.focus();
         }
         function resetForm() {
-            //$("#j_username").val("");
-            //$("#j_password").val("");
-            //$("#j_checknum").val("");
-            //$("#j_username").focus();
-            //return false;
-            window.location.href = "/Students/Register";
+            $("#txtnum").val("");
+            $("#txtpwd").val("");
+            $("#txtconfirmpwd").val("");
+            $("#txtCode").val("");
+            $("#txtnum").focus();
+            return false;
         }
         function a() {
-            //var obj = document.getElementById("j_username").value;
-            //if (obj == "admin") {
-            //    document.loginfrm.action = "0-0-总菜单.html";
-            //}
-            var userName = $("#j_username").val();
-            if (userName == "") {
-                $("#errorMsg").text("请输入用户名！");
+            var usernum = $("#txtnum").val();
+            if (usernum == "") {
+                $("#errorMsg").text("请填写学号！");
                 return false;
             }
             $("#errorMsg").val("");
-            var userPwd = $("#j_password").val();
+            var userPwd = $("#txtpwd").val();
             if (userPwd == "") {
-                $("#errorMsg").text("请输入密码！");
+                $("#errorMsg").text("请填写密码！");
                 return false;
             }
-            $("#errorMsg").val("");
-            var code = $("#j_checknum").val();
-            $("#errorMsg").text("请输入验证码！");
+            else {
+                $("#errorMsg").val("");
+            }
+            if (userPwd.length < 6) {
+                $("#errorMsg").text("密码为6~12位数字或字母！");
+                return false;
+            }
+            else {
+                $("#errorMsg").val("");
+            }
+            var confirmpwd = $("#txtconfirmpwd").val();
+            if (confirmpwd == "") {
+                $("#errorMsg").text("请填写确认密码！");
+                return false;
+            }
+            else {
+                $("#errorMsg").text("");
+            }
+
+            if (userPwd != confirmpwd) {
+                $("#errorMsg").text("两次填写的密码不一致！");
+                return false;
+            }
+            else {
+                $("#errorMsg").text("");
+            }
+
+            var code = $("#txtCode").val();
             if (code == "") {
+                $("#errorMsg").text("请填写验证码！");
                 return false;
             }
-            $("#errorMsg").text("");
-            $.post("/Students/CheckLogin", { name: userName, password: userPwd, code: code }, function (data) {
-                if (data == "ok") {
-                    alert("登录成功");
-                    window.location.href = "/Home/Index";
+            else {
+                $("#errorMsg").text("");
+            }
+
+            $.post("/Students/RegisterUser", { number: usernum, password: userPwd, confirmpwd: confirmpwd, code: code }, function (data) {
+                if (data == "succeed") {
+                    alert("注册成功!");
+                    window.location.href = "/Home/Index"; 
                 }
                 else {
-                    $("#valiCode").attr('src', "/Students/GetCode?cod3=" + (new Date()).getTime());
-                    $("#j_username").val("");
-                    $("#j_password").val("");
-                    $("#j_checknum").val("");
-                    $("#j_username").focus();
+                    $("#valiCode").attr('src', "/Students/GetRegisterCode?cod3=" + (new Date()).getTime());
+                    $("#txtnum").val("");
+                    $("#txtpwd").val("");
+                    $("#txtconfirmpwd").val("");
+                    $("#txtCode").val("");
+                    $("#txtnum").focus();
                     alert(data);
                 }
             });
         }
         $(function () {
             $("#valiCode").bind("click", function () {
-                this.src = "/Students/GetCode?cod3=" + (new Date()).getTime();
+                this.src = "/Students/GetRegisterCode?cod3=" + (new Date()).getTime();
             });
         });
     </script>
@@ -113,7 +144,7 @@
                                 <td>
                                     <table width="296" border="0" align="center" cellpadding="0" cellspacing="0" style="background: url(../images/index/images/itlogin_10.gif) repeat-x top">
                                         <tr>
-                                            <td><img src="~/images/index/images/itlogin_09.gif" width="92" height="28" alt="" /></td>
+                                            <td style=" color: white; font-size: 16px; padding-left:10px; font-family: 微软雅黑">@*<img src="~/images/index/images/itlogin_09.gif" width="92" height="28" alt="" />*@ 注&nbsp;册</td>
                                             <td align="right"><img src="~/images/itlogin_12.gif" width="8" height="28" alt="" /></td>
                                         </tr>
                                     </table>
@@ -124,33 +155,37 @@
                                     <table width="100%" border="0" cellpadding="5" cellspacing="0">
                                         <tr><td height="20"></td><td colspan="4"><span style="color:red" id="errorMsg"></span></td></tr>
                                         <tr>
-                                            <td height="40" align="right">用户名</td>
-                                            <td colspan="4"><input type="text" id="j_username" name="name" value="" required /></td>
+                                            <td height="40" align="right">学&nbsp;&nbsp;号</td>
+                                            <td colspan="4"><input onkeydown="onlyNum();" type="text" id="txtnum" name="number" value="" required /></td>
                                         </tr>
                                         <tr>
                                             <td height="40" align="right">密 &nbsp;&nbsp;码</td>
-                                            <td colspan="4"><input type="password" id="j_password" name="password" value="" required /></td>
+                                            <td colspan="4"><input type="password" id="txtpwd" name="password" value="" required /></td>
+                                        </tr>
+                                        <tr>
+                                            <td height="40" align="right">确认密码</td>
+                                            <td colspan="4"><input type="password" id="txtconfirmpwd" name="passwordConfirm" value="" required /></td>
                                         </tr>
                                         <tr>
                                             <td height="40" align="right">验证码</td>
                                             <td colspan="0.5">
-                                                <input type="text" id="j_checknum" name="code" value="" size="4" maxlength="4" required />
+                                                <input type="text" id="txtCode" name="code" value="" size="4" maxlength="4" required />
                                             </td>
                                             <td colspan="3.5">
-                                                <img id="valiCode" style="cursor:pointer" src="/Students/GetCode" width="65" height="24" alt="验证码" />
+                                                <img id="valiCode" style="cursor:pointer" src="/Students/GetRegisterCode" width="65" height="24" alt="验证码" />
                                             </td>
                                         </tr>
-                                        <tr>
+                                        @*<tr>
                                             <td colspan="5" height="15" align="center" style="color:red;"><c:if test="${not empty errorMsg}"></c:if></td>
-                                        </tr>
+                                        </tr>*@
                                     </table>
 
                                 </td>
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <input type="image" src="~/images/index/images/logiann_03.gif" width="72" height="33" onclick="a()" />
-                                    <input type="image" src="~/images/zhuce.jpg" width="72" height="33" onclick="resetForm()" style="margin-left:30px" />
+                                    <input type="image" src="~/images/zhuce.jpg" width="120" height="35" onclick="a()" />
+                                    @*<input type="image" src="~/images/index/images/logiann_05.gif" width="72" height="33" onclick="resetForm()" style="margin-left:30px" />*@
                                 </td>
                             </tr>
                         </table>

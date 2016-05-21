@@ -22,6 +22,7 @@ namespace ZK.SchoolManagerPro.Model
         public string Email { get; set; }
         public string Position { get; set; }
         public int state { get; set; }
+        public string user_password { get; set; }
 
     }
 }

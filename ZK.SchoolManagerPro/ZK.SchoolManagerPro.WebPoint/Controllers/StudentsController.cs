@@ -4,30 +4,35 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using ZK.SchoolManagerPro.Bll;
 using ZK.SchoolManagerPro.Model;
+using ZK.SchoolManagerPro.WebPoint.Filters;
 
 namespace ZK.SchoolManagerPro.WebPoint.Controllers
 {
     public class StudentsController : Controller
     {
         StudentBll bll = new StudentBll();
+
         //
         // GET: /Students/
+        [UserFilter]
         public ActionResult Index(int? pageIndex, string Name, string number, string Class, string department)
         {
             if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
             ViewBag.RedirectTo = "/Students/Index/";
             ViewBag.PageIndex = pageIndex;
             ViewBag.PageSize = 5;
-            
+
             #region 筛选条件
 
             string sqlWhere = " user_category=2";
@@ -52,9 +57,24 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             #region 绑定下拉框
             List<SelectListItem> departmentList = new List<SelectListItem>();
             departmentList.Add(new SelectListItem() { Text = "请选择", Value = "请选择", Selected = true });
-            departmentList.Add(new SelectListItem() { Text = "计算机工程系", Value = "计算机工程系" });
-            departmentList.Add(new SelectListItem() { Text = "机械工程系", Value = "机械工程系" });
-            departmentList.Add(new SelectListItem() { Text = "设计艺术系", Value = "设计艺术系" });
+
+            string depart = ConfigurationManager.AppSettings["depart"].ToString();
+            if (!string.IsNullOrEmpty(depart))
+            {
+                string[] departArray = depart.Split(',');
+                for (int i = 0; i < departArray.Length; i++)
+                {
+                    departmentList.Add(new SelectListItem() { Text = departArray[i].ToString(), Value = departArray[i].ToString() });
+                }
+            }
+            else
+            {
+                departmentList.Add(new SelectListItem() { Text = "计算机工程系", Value = "计算机工程系" });
+                departmentList.Add(new SelectListItem() { Text = "机械工程系", Value = "机械工程系" });
+                departmentList.Add(new SelectListItem() { Text = "设计艺术系", Value = "设计艺术系" });
+            }
+
+
 
             if (!string.IsNullOrEmpty(department) && department != "请选择")
             {
@@ -70,6 +90,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                     }
                 }
             }
+            string classStr = ConfigurationManager.AppSettings["depart"].ToString();
 
             List<SelectListItem> classList = new List<SelectListItem>();
             classList.Add(new SelectListItem() { Text = "请选择", Value = "请选择", Selected = true });
@@ -111,6 +132,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             return View();
         }
 
+
         public ActionResult GetCode()
         {
             //实例化验证码类
@@ -126,17 +148,41 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
 
         }
 
+        public ActionResult GetRegisterCode()
+        {
+            //实例化验证码类
+            ValidateCodeHelper validateCode = new ValidateCodeHelper();
+            //生成验证码指定的长度
+            string code = validateCode.CreateValidateCode(4);
+            //将验证码赋值给Session变量
+            Session["RegisterCode"] = code;
+            //创建验证码的图片
+            byte[] bytes = validateCode.CreateValidateGraphic(code);
+            //将验证码返回
+            return File(bytes, @"image/jpeg");
+
+        }
+
         public ActionResult CheckLogin()
         {
-            string userName = Request.Form["name"];
+            string userNum = Request.Form["name"];
             string userPwd = Request.Form["password"];
             string code = Request.Form["code"];
-            if (userName == "123" && userPwd == "123")
+            string sessionCode = string.Empty;
+            if (Session["ValidateCode"] != null)
             {
-                string sessionCode = Session["ValidateCode"].ToString();
-                if (code.Equals(sessionCode))
+                sessionCode = Session["ValidateCode"].ToString();
+            }
+
+            if (code.Equals(sessionCode))
+            {
+                Students model = bll.GetModel(userNum, SHA1Encrypt(userPwd));
+                //添加session
+                if (model != null)
                 {
-                    HttpCookie cookie = new HttpCookie("zkUser", userName);
+                    Session["CurrentLoginUser"] = model;
+                    //添加cookie
+                    HttpCookie cookie = new HttpCookie("ZKAccount", userNum);
                     cookie.Expires = DateTime.Now.AddHours(5);
                     cookie.Path = "/";
                     cookie.HttpOnly = false;
@@ -145,21 +191,92 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                 }
                 else
                 {
-                    return Content("验证码不正确");
+                    return Content("用户名或密码不正确");
                 }
             }
             else
             {
-                return Content("用户名或密码不正确");
+                return Content("验证码不正确");
             }
         }
 
-        public ActionResult IndexTeacher(int? pageIndex, string Name, string number,string department)
+        public ActionResult Logout()
+        {
+            HttpCookie cookie = Request.Cookies["ZKAccount"];
+            if (cookie != null)
+            {
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Set(cookie);
+            }
+            Session["CurrentLoginUser"] = null;
+            Session.Remove("CurrentLoginUser");
+
+            return View("../Students/Login");
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+        public ActionResult RegisterUser()
+        {
+            #region 后台验证
+            string studentNum = Request.Form["number"].ToString();
+            string studentPwd = Request.Form["password"].ToString();
+            string confimPwd = Request.Form["confirmpwd"].ToString();
+            string code = Request.Form["code"].ToString();
+            if (string.IsNullOrEmpty(studentNum))
+            {
+                return Content("请填写学号!");
+            }
+            if (string.IsNullOrEmpty(studentPwd))
+            {
+                return Content("请填写密码!");
+            }
+            if (string.IsNullOrEmpty(confimPwd))
+            {
+                return Content("请填写确认密码!");
+            }
+            if (!studentPwd.Equals(confimPwd))
+            {
+                return Content("两次填写的密码不一致!");
+            }
+            if (string.IsNullOrEmpty(code))
+            {
+                return Content("请填写验证码!");
+            }
+            string registerCode = Session["RegisterCode"].ToString();
+            if (!code.Equals(registerCode))
+            {
+                return Content("验证码填写不正确!");
+            }
+            Students model = bll.GetModelByUserNum(studentNum);
+            if (model == null)
+            {
+                return Content("没有该学号信息,请联系管理员!");
+            }
+            if (model.state == 1)
+            {
+                return Content("该学号已注册!");
+            }
+            #endregion
+            int result = bll.Register(SHA1Encrypt(studentPwd), studentNum);
+            if (result > 0)
+            {
+                return Content("succeed");
+            }
+            else
+            {
+                return Content("注册失败!");
+            }
+        }
+        [UserFilter]
+        public ActionResult IndexTeacher(int? pageIndex, string Name, string number, string department)
         {
             if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
             ViewBag.RedirectTo = "/Students/IndexTeacher/";
             ViewBag.PageIndex = pageIndex;
-            ViewBag.PageSize = 2;
+            ViewBag.PageSize = 5;
 
             #region 筛选条件
 
@@ -315,7 +432,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
 
                 return Content("批量导入失败：" + ex.Message);
             }
-            
+
 
         }
 
@@ -324,11 +441,11 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public ActionResult ResetPassWord(int Id,string userNumber)
+        public ActionResult ResetPassWord(int Id, string userNumber)
         {
             if (Id <= 0)
                 return Content("请先选择要重置密码的用户！");
-            int result = bll.ResetPassword(Id, userNumber + "123456");
+            int result = bll.ResetPassword(Id, SHA1Encrypt(userNumber + "00"));
             if (result > 0)
             {
                 return Content("重置密码成功！");
@@ -339,6 +456,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             }
         }
 
+        [UserFilter]
         public ActionResult Edit(Students student)
         {
             Students model = new Students();
@@ -381,6 +499,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             }
         }
 
+        [UserFilter]
         public ActionResult Add(Students student)
         {
             #region 数据验证
@@ -400,8 +519,14 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             {
                 return Content("请选择学生院系！");
             }
+            Students modelDB = bll.GetModelByUserNum(student.UserNum);
+            if (modelDB != null)
+            {
+                return Content("该学号已添加！");
+            }
+
             #endregion
-            Students model = new Students();           
+            Students model = new Students();
             model.UserNum = student.UserNum;
             model.UserName = student.UserName;
             model.Sex = student.Sex;
@@ -420,6 +545,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                 return Content("添加失败");
             }
         }
+        [UserFilter]
         public ActionResult AddTeacher(Students student)
         {
             #region 数据验证
@@ -436,14 +562,14 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                 return Content("请选择学生院系！");
             }
             #endregion
-        
+
             #region 判断该教师是否存在（根据工号）
             bool isExist = bll.GetModel(student.UserNum);
             if (isExist)
             {
                 return Content("该教师已存在！");
             }
-            #endregion       
+            #endregion
 
             #region 添加
             Students model = new Students();
@@ -487,15 +613,22 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             {
                 return Content("删除失败！");
             }
-            
+
         }
-        
+
         public List<string> CreateSqlList(DataTable dt)
         {
             List<string> list = new List<string>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                list.Add(string.Format("INSERT INTO t_users(user_name,user_num,user_sex,department,class,mobile,user_category,state) VALUES('{0}','{1}',{2},'{3}','{4}','{5}',{6},{7})", dt.Rows[i][0].ToString(), dt.Rows[i][1].ToString(), Convert.ToInt32(dt.Rows[i][2]), dt.Rows[i][3].ToString(), dt.Rows[i][4].ToString(), dt.Rows[i][5].ToString(), 2, 0));
+                if (!string.IsNullOrEmpty(dt.Rows[i][1].ToString()))
+                {
+                    Students model = bll.GetModelByUserNum(dt.Rows[i][1].ToString());
+                    if (model == null)
+                    {
+                        list.Add(string.Format("INSERT INTO t_users(user_name,user_num,user_sex,department,class,mobile,user_category,state) VALUES('{0}','{1}',{2},'{3}','{4}','{5}',{6},{7})", dt.Rows[i][0].ToString(), dt.Rows[i][1].ToString(), Convert.ToInt32(dt.Rows[i][2]), dt.Rows[i][3].ToString(), dt.Rows[i][4].ToString(), dt.Rows[i][5].ToString(), 2, 0));
+                    }
+                }
             }
             return list;
         }
@@ -511,7 +644,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                 fs.Close();
                 fs.Dispose();
             }
-           // DbHelperMySql.ExecuteTransaction()
+            // DbHelperMySql.ExecuteTransaction()
             CreateCSVfile(dt, Server.MapPath(strFile));
             MySqlBulkLoader bcp1 = new MySqlBulkLoader(new MySqlConnection(DbHelperMySql.connectionStringManager));
             bcp1.TableName = "users";
@@ -532,7 +665,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
                 strReturn = ex.Message;
             }
 
-            
+
             ////Generate csv file from where data read 
             //CreateCSVfile(orderDetail, Server.MapPath(strFile));
             //using (MySqlConnection cn1 = new MySqlConnection(connectMySQL))
@@ -555,7 +688,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             //    }
             //}
             return strReturn;
-        }            
+        }
         public static void CreateCSVfile(DataTable dtable, string strFilePath)
         {
             StreamWriter sw = new StreamWriter(strFilePath, false, Encoding.UTF8);
@@ -579,6 +712,23 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             sw.Dispose();
         }
 
+        /// <summary>
+        /// SHA1方式加密字符串的方法
+        /// </summary>
+        /// <param name="s">要进行加密的字符串</param>
+        /// <returns>加密后的字符串</returns>
+        public static string SHA1Encrypt(string s)
+        {
+            SHA1 sha1 = new SHA1CryptoServiceProvider();
+            byte[] bytes = sha1.ComputeHash(Encoding.Default.GetBytes(s));
+            string result = string.Empty;
+            foreach (byte b in bytes)
+            {
+                result += b.ToString("x");
+            }
+            return result;
+        }
 
-	}
+
+    }
 }

@@ -16,20 +16,25 @@ namespace ZK.SchoolManagerPro.Bll
        {
            return dal.GetStudetnsList(pageIndex, pageSize, strWhere, columns, sort).Tables[0];
        }
-
        public int GetTotalCount(string sqlWhere)
        {
            return dal.GetTotalCount(sqlWhere);
        }
-
        public int DeleteStudent(int Id)
        {
            return dal.DeleteStudent(Id);
        }
-
        public Students GetModel(int Id)
        {
            return dal.GetModel(Id);
+       }
+       public  Students GetModelByUserNum(string userNum)
+       {
+           return dal.GetModelByUserNum(userNum);
+       }
+       public Students GetModel(string userNum, string userPwd)
+       {
+           return dal.GetModel(userNum, userPwd);
        }
        public bool GetModel(string userNum)
        {
@@ -42,6 +47,10 @@ namespace ZK.SchoolManagerPro.Bll
        public int Add(Students model)
        {
            return dal.Add(model);
+       }
+       public int Register(string password, string number)
+       {
+           return dal.Register(password, number);
        }
        /// <summary>
        /// 重置密码

@@ -63,22 +63,19 @@
         }
     </style>
     <script type="text/javascript">
-        function Delete(id)
-        {
+        function Delete(id) {
             if (confirm("确定要删除该学生吗?")) {
                 AjaxSubmit(id);
             }
         }
-        function AjaxSubmit(id)
-        {
+        function AjaxSubmit(id) {
             $.post("/Students/DeleteUser", { id: id }, function (data) {
                 alert(data);
                 window.location.reload();
             });
         }
 
-        function OpenPage()
-        {
+        function OpenPage() {
             var dialog = art.dialog({
                 title: '欢迎',
                 content: '欢迎使用artDialog对话框组件！',
@@ -90,10 +87,9 @@
                 }
             });
         }
-        function Reset(Id,userNumber)
-        {
+        function Reset(Id, userNumber) {
             if (confirm("确定要重置密码吗?")) {
-                $.post("/Students/ResetPassWord", { Id: Id,userNumber:userNumber }, function (data) {
+                $.post("/Students/ResetPassWord", { Id: Id, userNumber: userNumber }, function (data) {
                     alert(data);
                     window.location.reload();
                 });
@@ -144,6 +140,7 @@
                                     <option>机械工程系</option>
                                     <option>设计艺术系</option>
                                 </select>*@
+
                             @Html.DropDownList("department", (IEnumerable<SelectListItem>)ViewBag.departmentList))
                         </td>
                     </tr>
@@ -159,7 +156,7 @@
     <div class="listable">
         <input type="button" value="新增学生" onclick="doAction('../../Page/studentadd.html', 40, 50);">
         &nbsp;&nbsp;
-        <input type="button" value="批量导入" onclick="doAction('../../Page/UploadStudents.html', 40, 29);">
+        <input type="button" value="批量导入" onclick="doAction('../../Page/UploadStudents.html', 35, 20);">
     </div>
     <div class="listable" id="queryButton">
 
@@ -191,7 +188,6 @@
                         &nbsp;
                         <input type="button" value="密码重置" onclick="Reset(@row["user_Id"],@row["user_num"])" />
                     </td>
-
                 </tr>
             }
         </table>
@@ -200,5 +196,4 @@
         @Html.ShowPageNavigate((int)(ViewBag.PageIndex), (int)(ViewBag.PageSize), (int)(ViewBag.TotalCount), (string)ViewBag.RedirectTo, (string)ViewBag.Name, (string)ViewBag.number, (string)ViewBag.Class, (string)ViewBag.Department)
     </div>
 </body>
-
 </html>

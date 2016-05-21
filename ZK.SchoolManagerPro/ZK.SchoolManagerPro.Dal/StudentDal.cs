@@ -87,6 +87,27 @@ namespace ZK.SchoolManagerPro.Dal
             return DbHelperMySql.ExecuteNonQuery(DbHelperMySql.ConnectionStringManager, CommandType.Text, cmdText, parms);
         }
 
+        public int Register(string password,string number)
+        {
+            try
+            {
+                string cmdText = "Update t_users SET user_password=@pwd,state=@state WHERE user_num=@number";
+                MySqlParameter[] parms ={
+                                      new MySqlParameter("@number",MySqlDbType.VarChar),
+                                      new MySqlParameter("@pwd",MySqlDbType.VarChar),
+                                      new MySqlParameter("@state",MySqlDbType.VarChar)
+                                      };
+                parms[0].Value = number;
+                parms[1].Value = password;
+                parms[2].Value = 1;
+                return DbHelperMySql.ExecuteNonQuery(DbHelperMySql.connectionStringManager, CommandType.Text, cmdText, parms);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
         /// <summary>
         /// 重置密码
         /// </summary>
@@ -107,7 +128,7 @@ namespace ZK.SchoolManagerPro.Dal
 
         public Students GetModel(int Id)
         {
-            string cmdText = "SELECT user_Id,user_name,user_num,user_sex,teacherName,department,class,age,position FROM t_users WHERE user_Id=@user_Id";
+            string cmdText = "SELECT * FROM t_users WHERE user_Id=@user_Id";
             MySqlParameter[] parms =
             {
                 new MySqlParameter("@user_Id",MySqlDbType.Int32)
@@ -125,9 +146,52 @@ namespace ZK.SchoolManagerPro.Dal
             }
         }
 
+        public Students GetModel(string userNum, string userPwd)
+        {
+            string cmdText = "SELECT * FROM t_users WHERE user_num=@user_num and user_password=@userPwd";
+            MySqlParameter[] parms =
+            {
+                new MySqlParameter("@user_num",MySqlDbType.VarChar),
+                new MySqlParameter("@userPwd",MySqlDbType.VarChar)
+            };
+            parms[0].Value = userNum;
+            parms[1].Value = userPwd;
+            MySqlDataReader reader = DbHelperMySql.ExecuteReader(DbHelperMySql.connectionStringManager, CommandType.Text, cmdText, parms);
+            List<Students> list = ExecuteList(reader);
+            if (list.Count > 0)
+            {
+                return list[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        public  Students GetModelByUserNum(string userNum)
+        {
+            string cmdText = "SELECT * FROM t_users WHERE user_num=@user_num";
+            MySqlParameter[] parms =
+            {
+                new MySqlParameter("@user_num",MySqlDbType.VarChar)
+            };
+            parms[0].Value = userNum;
+            MySqlDataReader reader = DbHelperMySql.ExecuteReader(DbHelperMySql.connectionStringManager, CommandType.Text, cmdText, parms);
+            List<Students> list = ExecuteList(reader);
+            if (list.Count > 0)
+            {
+                return list[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool GetModel(string userNum)
         {
-            string cmdText = "SELECT user_Id,user_name,user_num,user_sex,teacherName,department,class FROM t_users WHERE user_num=@userNumber";
+            string cmdText = "SELECT * FROM t_users WHERE user_num=@userNumber";
             MySqlParameter[] parms =
             {
                 new MySqlParameter("@userNumber",MySqlDbType.VarChar)
@@ -156,6 +220,7 @@ namespace ZK.SchoolManagerPro.Dal
                     model.ID = Convert.ToInt32(reader["user_Id"]);
                     model.UserName = reader["user_name"].ToString();
                     model.UserNum = reader["user_num"].ToString();
+                    model.state = reader["state"] == DBNull.Value ? 0 : Convert.ToInt32(reader["state"]);
                     model.Sex = Convert.ToInt32(reader["user_sex"]);
                     model.TeacherName = reader["teacherName"].ToString();
                     model.Department = reader["department"].ToString();
