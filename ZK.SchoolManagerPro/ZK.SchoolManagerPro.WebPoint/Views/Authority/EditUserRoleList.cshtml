@@ -1,8 +1,13 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <base target="_self">
-    <title>新增用户权限</title>
+    <title>新增学生</title>
     <!-- HTTP 1.1 -->
     <meta http-equiv="Cache-Control" content="no-store" />
     <!-- HTTP 1.0 -->
@@ -44,10 +49,15 @@
         $(function () {
 
 
+
+
+
+
+
             //保存
             $("#btnSave").click(function () {
 
-
+                var tuid = $("#raIdHideen").val();
                 var urname = $("#ur_name").val();
                 var userid = $("#ur_name").attr("userid");
 
@@ -62,7 +72,7 @@
                     $("#ur_nameSpan").text("");
                 }
 
-                $.post("../Authority/AddUserAuthorityListForm", { urname: urname, userid: userid, authorityId: authorityId, authorityName: authorityName }, function (data) {
+                $.post("../Authority/EditUserAuthorityListForm", { tuid:tuid,urname: urname, userid: userid, authorityId: authorityId, authorityName: authorityName }, function (data) {
                     alert(data);
                     top.window.location.href = top.window.location.href;
                     window.onbeforeunload();
@@ -81,15 +91,15 @@
             <div class="content_box">
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
-                        <td class="title" align="center">用户权限信息</td>
+                        <td class="title" align="center">权限信息</td>
                     </tr>
                 </table>
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>用户名称:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>角色名称:</th>
                         <td width="80%" align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ur_name"  size="25" maxlength="32" userid="@ViewBag.UserModel.ID"  value="@ViewBag.UserModel.UserName"/>
-                            <span id="ur_nameSpan" style="color:#FF0000"></span>
+                            <input type="text" id="ur_name" size="25" maxlength="32" userid="@ViewBag.UserModel.T_UaID" value="@ViewBag.UserModel.T_UserName" />
+                            <span id="ah_nameSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                     <tr>
@@ -97,12 +107,21 @@
                         <td align="left" style="border-bottom-width: 0px">
                             <select id="AuthorityList">
                                 <option>请选择</option>
-                                @foreach (System.Data.DataRow row in ViewBag.AuthorityList.Rows)
-                                {
-                                    <option value=" @row["ah_id"].ToString() "> @row["ah_name"].ToString()</option>
-                                }
-                            </select>
 
+                                @for (int i = 0; i < Model.Rows.Count; i++)
+                                {
+                                    if ((int)Model.Rows[i]["ah_id"] == (int)ViewBag.UserModel.T_AuthorityID)
+                                    {
+                                        <option value='@Model.Rows[i]["ah_id"].ToString()' selected="selected"> @Model.Rows[i]["ah_name"].ToString()</option>
+                                    }
+                                    else
+                                    {
+                                        <option value='@Model.Rows[i]["ah_id"].ToString()'> @Model.Rows[i]["ah_name"].ToString()</option>
+                                    }
+                                }
+
+                            </select>
+                            <span id="ah_controller_urlSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                 </table>
@@ -120,7 +139,7 @@
             </div>
         </form>
     </div>
-
+    <input type="hidden" name="name" id="raIdHideen" value="@ViewBag.UserModel.T_UaID" />
 </body>
 </html>
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <base target="_self">
-    <title>新增用户权限</title>
+    <title>新增用户角色</title>
     <!-- HTTP 1.1 -->
     <meta http-equiv="Cache-Control" content="no-store" />
     <!-- HTTP 1.0 -->
@@ -51,8 +51,8 @@
                 var urname = $("#ur_name").val();
                 var userid = $("#ur_name").attr("userid");
 
-                var authorityId = $("#AuthorityList").val();
-                var authorityName = $("#AuthorityList").find("option:selected").text();
+                var roleId = $("#RoleList").val();
+                var roleName = $("#RoleList").find("option:selected").text();
 
                 if (ur_name == "") {
                     $("#ur_nameSpan").text("请输入用户名称！");
@@ -62,7 +62,7 @@
                     $("#ur_nameSpan").text("");
                 }
 
-                $.post("../Authority/AddUserAuthorityListForm", { urname: urname, userid: userid, authorityId: authorityId, authorityName: authorityName }, function (data) {
+                $.post("../Authority/AddUserRoleListForm", { roleId: roleId, roleName: roleName, userid: userid, urname: urname }, function (data) {
                     alert(data);
                     top.window.location.href = top.window.location.href;
                     window.onbeforeunload();
@@ -81,25 +81,25 @@
             <div class="content_box">
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
-                        <td class="title" align="center">用户权限信息</td>
+                        <td class="title" align="center">用户角色信息</td>
                     </tr>
                 </table>
                 <table align="center" cellpadding="3" cellspacing="0">
                     <tr>
                         <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>用户名称:</th>
                         <td width="80%" align="left" style="border-bottom-width: 0px">
-                            <input type="text" id="ur_name"  size="25" maxlength="32" userid="@ViewBag.UserModel.ID"  value="@ViewBag.UserModel.UserName"/>
+                            <input type="text" id="ur_name" size="25" maxlength="32" userid="@ViewBag.UserModel.ID" value="@ViewBag.UserModel.UserName" />
                             <span id="ur_nameSpan" style="color:#FF0000"></span>
                         </td>
                     </tr>
                     <tr>
-                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>权限名称:</th>
+                        <th width="20%" align="right"><span id="amount" style="color:#FF0000">*</span>角色名称:</th>
                         <td align="left" style="border-bottom-width: 0px">
-                            <select id="AuthorityList">
+                            <select id="RoleList">
                                 <option>请选择</option>
-                                @foreach (System.Data.DataRow row in ViewBag.AuthorityList.Rows)
+                                @foreach (System.Data.DataRow row in ViewBag.RoleList.Rows)
                                 {
-                                    <option value=" @row["ah_id"].ToString() "> @row["ah_name"].ToString()</option>
+                                    <option value=" @row["r_id"].ToString() "> @row["r_name"].ToString()</option>
                                 }
                             </select>
 

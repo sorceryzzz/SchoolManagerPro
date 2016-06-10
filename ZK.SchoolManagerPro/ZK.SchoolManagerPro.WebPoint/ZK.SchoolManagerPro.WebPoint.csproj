@@ -590,6 +590,9 @@
     <Content Include="Views\Authority\UserAuthorityList.cshtml" />
     <Content Include="Views\Authority\AddUserAuthorityList.cshtml" />
     <Content Include="Views\Authority\EditUserAuthorityList.cshtml" />
+    <Content Include="Views\Authority\AddUserRoleList.cshtml" />
+    <Content Include="Views\Authority\UserRoleList.cshtml" />
+    <Content Include="Views\Authority\EditUserRoleList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

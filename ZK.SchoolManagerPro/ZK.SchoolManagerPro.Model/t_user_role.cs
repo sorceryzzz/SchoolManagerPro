@@ -12,7 +12,9 @@ namespace ZK.SchoolManagerPro.Model
         #region - feild -
         private int t_urid;
         private int t_userid;
+        private string t_username;
         private int t_roleid;
+        private string t_rolename;
         private string t_creater;
         private DateTime t_createTime;
         private DateTime t_updateTime;
@@ -27,10 +29,14 @@ namespace ZK.SchoolManagerPro.Model
         /// 用户ID
         /// </summary>
         public int T_UserID { set { t_userid = value; } get { return t_userid; } }
+
+        public string T_UserName { set { t_username = value; } get { return t_username; } }
         /// <summary>
         /// 角色ID
         /// </summary>
         public int T_RoleID { set { t_roleid = value; } get { return t_roleid; } }
+
+        public string T_RoleName { set { t_rolename = value; } get { return t_rolename; } }
         /// <summary>
         /// 创建者
         /// </summary>

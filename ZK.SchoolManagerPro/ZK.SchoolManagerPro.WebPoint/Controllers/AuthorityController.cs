@@ -22,7 +22,145 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
         StudentBll studentBll = new StudentBll();
 
 
-        #region - 用户和角色 -
+
+        #region - 用户和角色-
+
+        /// <summary>
+        /// 添加角色和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EditUserRoleList()
+        {
+            var id = Request["id"];
+
+            if (string.IsNullOrEmpty(id))
+            {
+                return Content("输入参数有误!");
+            }
+            
+            var userModel = studentBll.GetModel(int.Parse(id));
+            var roleList = roleBll.GetRoleList();
+
+            ViewBag.UserModel = userModel;
+            ViewBag.RoleList = roleList;
+  
+            return View();
+        }
+
+
+        /// <summary>
+        /// 删除用户与权限
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DeleteUserRoleInfo(int? t_uaid)
+        {
+            int result = userRoleBll.Delete(t_uaid);
+            if (result > 0)
+            {
+                return Content("删除成功！");
+            }
+            else
+            {
+                return Content("删除失败！");
+            }
+
+        }
+
+        /// <summary>
+        /// 获取用户和角色关联列表
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UserRoleList(int? pageIndex)
+        {
+            if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
+            ViewBag.RedirectTo = "/Authority/UserRoleList/";
+            ViewBag.PageIndex = pageIndex;
+            ViewBag.PageSize = 5;
+
+            var count = userRoleBll.GetCount();//总条数
+
+            ViewBag.Name = string.Empty;
+            ViewBag.number = string.Empty;
+            ViewBag.Department = string.Empty;
+            ViewBag.TotalCount = count;
+            DataTable dt = userRoleBll.GetUserRoleList(pageIndex.Value, 5);
+
+            return View(dt);
+        }
+
+
+
+
+        /// <summary>
+        /// 添加用户和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddUserRoleListForm()
+        {
+            
+                var userid = Request["userid"];
+                var roleId = Request["roleId"];
+                var urname = Request["urname"];
+                var roleName = Request["roleName"];
+
+                var t_creater = "00000000000";
+
+                if (string.IsNullOrEmpty(userid) || string.IsNullOrEmpty(roleId))
+                {
+                    return Content("请输入用户与权限！");
+                }
+                Model.t_user_role tuaModel = new t_user_role();
+
+                tuaModel.T_UserID = int.Parse(userid);
+                tuaModel.T_UserName = urname;
+                tuaModel.T_RoleID = int.Parse(roleId);
+                tuaModel.T_RoleName = roleName;
+                tuaModel.T_Creater = t_creater;
+                tuaModel.T_CreateTime = DateTime.Now;
+                tuaModel.T_UpdateTime = DateTime.Now;
+
+                int rltInt = userRoleBll.Add(tuaModel);
+
+                if (rltInt > -1)
+                {
+                    return Content("添加成功");
+                }
+                else
+                {
+                    return Content("添加失败");
+                }
+               
+            }
+        /// <summary>
+        /// 添加用户和权限关联
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddUserRoleList()
+        {
+            //var roleList = roleBll.GetRoleList();
+            var userId = Request["userId"];
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Content("用户ID不能为空");
+            }
+
+            var userModel = studentBll.GetModel(int.Parse(userId));
+            var roleList = roleBll.GetRoleList();
+
+
+            //ViewBag.RoleList = roleList;
+            ViewBag.UserModel = userModel;
+            ViewBag.RoleList = roleList;
+
+            return View();
+        }
+       
+
+        #endregion
+
+
+        #region - 用户和权限 -
         /// <summary>
         /// 获取用户和权限关联列表
         /// </summary>
@@ -32,7 +170,7 @@ namespace ZK.SchoolManagerPro.WebPoint.Controllers
             if (pageIndex == null || pageIndex <= 0) pageIndex = 1;
             ViewBag.RedirectTo = "/Authority/UserAuthorityList/";
             ViewBag.PageIndex = pageIndex;
-            ViewBag.PageSize = 5;
+            ViewBag.PageSize =5;
 
 
             var count = userAuthorityBll.GetCount();//总条数

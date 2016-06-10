@@ -186,7 +186,7 @@
                         &nbsp;
                         <input type="button" value="密码重置" onclick="Reset(@row["user_Id"],@row["user_num"])" />
                         <input name="sub1" type="button" class="input" userId='@row["user_Id"]' id="contract_authorityID" value="关联权限" />
-                        <input name="sub1" type="button" class="input" id="" value="关联角色" />
+                        <input name="sub1" type="button" class="input"  userId='@row["user_Id"]' id="contract_RoleID" value="关联角色" />
                     </td>
                     
                 </tr>
@@ -210,6 +210,20 @@
                 doAction('../Authority/AddUserAuthorityList?userId='+ userid, 40, 30);
 
             });
+
+            //关联角色
+            $("#contract_RoleID").click(function () {
+
+                //用户ID
+                var userid = $(this).attr("userId");
+
+                doAction('../Authority/AddUserRoleList?userId=' + userid, 40, 30);
+            });
+
+
+
+
+
         })
     </script>
 </body>

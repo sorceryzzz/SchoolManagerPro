@@ -107,19 +107,7 @@
                         <td align="left" style="border-bottom-width: 0px">
                             <select id="AuthorityList">
                                 <option>请选择</option>
-
-                                @for (int i = 0; i < Model.Rows.Count; i++)
-                                {
-                                    if ((int)Model.Rows[i]["ah_id"] == (int)ViewBag.UaModel.T_AuthorityID)
-                                    {
-                                        <option value='@Model.Rows[i]["ah_id"].ToString()' selected="selected"> @Model.Rows[i]["ah_name"].ToString()</option>
-                                    }
-                                    else
-                                    {
-                                        <option value='@Model.Rows[i]["ah_id"].ToString()'> @Model.Rows[i]["ah_name"].ToString()</option>
-                                    }
-                                }
-                                @*@foreach (System.Data.DataRow row in Model.Rows)
+                                @foreach (System.Data.DataRow row in ViewData.Model.Rows)
                                 {
                                     if ((int)row["ah_id"] == (int)ViewBag.UaModel.T_AuthorityID)
                                     {
@@ -129,7 +117,7 @@
                                     {
                                         <option value='@row["ah_id"].ToString()'> @row["ah_name"].ToString()</option>
                                     }
-                                }*@
+                                }
                             </select>
                             <span id="ah_controller_urlSpan" style="color:#FF0000"></span>
                         </td>

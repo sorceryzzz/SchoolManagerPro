@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -13,13 +14,34 @@ namespace ZK.SchoolManagerPro.BLL
         private readonly ZK.SchoolManagerPro.DAL.UserRoleDal dal = new ZK.SchoolManagerPro.DAL.UserRoleDal();
 
         /// <summary>
+        /// 获取权限列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strWhere"></param>
+        /// <param name="columns"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        public DataTable GetUserRoleList(int pageIndex, int pageSize)
+        {
+            return dal.GetUserRoleList(pageIndex, pageSize, "1=1", "t_createtime").Tables[0];
+
+        }
+
+        /// <summary>
         /// 增加一条数据
         /// </summary>
         public int Add(ZK.SchoolManagerPro.Model.t_user_role model)
         {
            return  dal.Add(model);
         }
-
+        /// <summary>
+        /// 获取数量
+        /// </summary>
+        public int GetCount()
+        {
+            return dal.GetCount();
+        }
         /// <summary>
         /// 更新一条数据
         /// </summary>

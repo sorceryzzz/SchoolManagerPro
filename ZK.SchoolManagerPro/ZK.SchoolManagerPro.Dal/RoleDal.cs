@@ -224,9 +224,8 @@ namespace ZK.SchoolManagerPro.DAL
             }
             return ds;
         }
-
         /// <summary>
-        /// 获取权限列表
+        /// 获取角色列表
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
@@ -240,7 +239,7 @@ namespace ZK.SchoolManagerPro.DAL
             DataSet ds = null;
             try
             {
-                cmdText = string.Format("SELECT * FROM t_role ");
+                cmdText = string.Format("SELECT * FROM t_role");
                 ds = DbHelperMySql.GetDataSet(DbHelperMySql.connectionStringManager, cmdText);
             }
             catch (Exception ex)
@@ -249,9 +248,5 @@ namespace ZK.SchoolManagerPro.DAL
             }
             return ds;
         }
-
-
-
-
     }
 }
